@@ -7,6 +7,10 @@
 
 <!-- Latest compiled JavaScript -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- axios import-->
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
 </head>
    
 <body>
@@ -18,14 +22,15 @@
     <p>Paring/Connection: <span><button type="button" class="btn btn-primary">Pair</button></span></p>
     </div>
     <div class="text-center mt-1">
-            <p>Curtain State: <span><button type="button" class="btn btn-primary">Open</button><button type="button" class="btn btn-primary">Close</button></span></p>
+            <p>Curtain State: <span><button type="button" class="btn btn-primary">Open</button>
+                <button type="button" class="btn btn-primary">Close</button></span></p>
         </div>
         <h2 class="text-center mt-1">Advanced Scheduling</h2>
         
     <div class="text-center mt-1">
         <div class="text-center mt-1">
             <div>
-    <form action="/action_page.php"> <!-- submit -->
+    <form id="timer" action="/login" method="POST"> <!-- submit -->
         <label for="appt"><img src="https://img.icons8.com/pastel-glyph/2x/clock--v2.png" width="30" height="30">Select a time:</label>
         <input type="time" id="appt" name="appt">
         <input type="submit">
@@ -61,3 +66,17 @@ body {
     }
 }
 </style>
+
+<script>
+
+const url = "home" 
+console.log("HI")
+fetch(url, {
+    method: 'POST',
+})
+ .then((response) => response.json())
+ .then((data) => console.log(data))
+ .catch((error) => console.log(error)); 
+
+console.log("yo");
+</script>
