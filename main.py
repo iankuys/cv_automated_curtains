@@ -2,26 +2,34 @@ from flask import Flask, render_template, request, url_for, redirect
 import cv2 as cv2
 from pylab import *
 import mediapipe as mp
-#import keyboard
+import keyboard
+import results
 
 mp_drawing = mp.solutions.drawing_utils
 mp_hands = mp.solutions.hands
+drawingModule = mp.solutions.drawing_utils
+handsModule = mp.solutions.hands
 app = Flask(__name__)
+
 
 tipIds = [4, 8, 12, 16, 20]
 state = None
 Gesture = None
 wCam, hCam = 720, 640
+cap = cv2.VideoCapture(0)
 
 def fingerPosition(image, handNo=0):
     lmList = []
-    if results.multi_hand_landmarks:
-        myHand = results.multi_hand_landmarks[handNo]
-        for id, lm in enumerate(myHand.landmark):
-            # print(id,lm)
-            h, w, c = image.shape
-            cx, cy = int(lm.x * w), int(lm.y * h)
-            lmList.append([id, cx, cy])
+    with handsModule.Hands(static_image_mode=False, min_detection_confidence=0.7, min_tracking_confidence=0.7, max_num_hands=2) as hands:
+        ret, frame = cap.read()
+        results = hands.process(cv2.cvtColor(frame, cv2.COLOR_BGR2RGB))
+        if results.multi_hand_landmarks:
+            myHand = results.multi_hand_landmarks[handNo]
+            for id, lm in enumerate(myHand.landmark):
+                # print(id,lm)
+                h, w, c = image.shape
+                cx, cy = int(lm.x * w), int(lm.y * h)
+                lmList.append([id, cx, cy])
     return lmList
 
 @app.route('/', methods=['GET', 'POST'])
@@ -41,13 +49,16 @@ def home():
 
 @app.route('/capture', methods=['GET', 'POST'])
 def capture():     
-    cap = cv2.VideoCapture(0)
+    #cap = cv2.VideoCapture(0)
+    state = ""
     cap.set(3, wCam)
     cap.set(4, hCam)
     with mp_hands.Hands(
         min_detection_confidence=0.8,
         min_tracking_confidence=0.5) as hands:
         while cap.isOpened():
+            ret, frame = cap.read()
+            results = hands.process(cv2.cvtColor(frame, cv2.COLOR_BGR2RGB))
             success, image = cap.read()
             if not success:
                 print("Ignoring empty camera frame.")
@@ -65,6 +76,14 @@ def capture():
                 for hand_landmarks in results.multi_hand_landmarks:
                     mp_drawing.draw_landmarks(
                     image, hand_landmarks, mp_hands.HAND_CONNECTIONS)
+                    drawingModule.draw_landmarks(frame, hand_landmarks, handsModule.HAND_CONNECTIONS)
+
+            cv2.imshow('Test hand', frame)
+
+            if cv2.waitKey(1) == 27:
+                print("ESC key pressed exiting")
+                break
+
             lmList = fingerPosition(image)
             #print(lmList)
             if len(lmList) != 0:
@@ -86,10 +105,8 @@ def capture():
                     state = "Pause"
                     print("CLOSING CURTAIN")
                     break            
-                #if keyboard.read_key() == "q":
-                #    print("You pressed q")
-                #    break           # if the `q` key was pressed, break from the loop
-
+        
+    return ("hi")
 if __name__ == "__main__":
    app.run(host='0.0.0.0', port=80, debug=True)
 
