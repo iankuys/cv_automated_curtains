@@ -11,6 +11,44 @@
 <!-- axios import-->
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
+ 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function(){
+      
+      $("#open_btn").click(function(){
+    
+        $.post("/open",
+        {
+          name: "client",
+          time: "now"
+        },  );
+      });
+    });
+    $(document).ready(function(){
+        
+         $("#stop").click(function(){
+          $("#currentState").text("Current State: Stopped")
+           $.post("/stop_junk_transporter",
+           {
+             name: "client",
+             time: "now"
+           },  );
+         });
+       });
+    $(document).ready(function(){
+         $("#open").click(function(){
+          $('#trashDetection').html("Lid Open: Yes")
+           $.post("/open_junk_transporter",
+           {
+             name: "client",
+             time: "now"
+           },  );
+         
+          });
+       });
+</script>
+
 </head>
    
 <body>
@@ -22,7 +60,7 @@
     <p>Paring/Connection: <span><button type="button" class="btn btn-primary">Pair</button></span></p>
     </div>
     <div class="text-center mt-1">
-            <p>Curtain State: <span><button type="button" class="btn btn-primary">Open</button>
+            <p>Curtain State: <span><button id="open_btn" type="button" class="btn btn-primary">Open</button>
                 <button type="button" class="btn btn-primary">Close</button></span></p>
         </div>
         <h2 class="text-center mt-1">Advanced Scheduling</h2>
@@ -39,44 +77,32 @@
 
         
 </body>
- 
+
 </html>
 
+
 <style>
-html, body {
-  width: 100%;
-  height:100%;
-}
-
-body {
-    background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
-    background-size: 400% 400%;
-    animation: gradient 15s ease infinite;
-}
-
-@keyframes gradient {
-    0% {
-        background-position: 0% 50%;
+    html, body {
+      width: 100%;
+      height:100%;
     }
-    50% {
-        background-position: 100% 50%;
+    
+    body {
+        background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+        background-size: 400% 400%;
+        animation: gradient 15s ease infinite;
     }
-    100% {
-        background-position: 0% 50%;
+    
+    @keyframes gradient {
+        0% {
+            background-position: 0% 50%;
+        }
+        50% {
+            background-position: 100% 50%;
+        }
+        100% {
+            background-position: 0% 50%;
+        }
     }
-}
-</style>
-
-<script>
-
-const url = "home" 
-console.log("HI")
-fetch(url, {
-    method: 'POST',
-})
- .then((response) => response.json())
- .then((data) => console.log(data))
- .catch((error) => console.log(error)); 
-
-console.log("yo");
-</script>
+  
+    </style>

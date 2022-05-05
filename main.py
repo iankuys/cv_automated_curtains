@@ -12,11 +12,10 @@ def login():
     data = request.form['appt']
     return (data)
 
-@app.route('/home', methods=['GET', 'POST'])
+@app.route('/open', methods=['GET', 'POST'])
 def home():
     print("hello")
-
     return ("hi")
 
 if __name__ == "__main__":
-    app.run()
+   app.run(host='0.0.0.0', port=80, debug=True)
