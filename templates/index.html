@@ -48,6 +48,25 @@
           });
        });
 </script>
+<style type ='text/css'>
+  .footer{ 
+      position: fixed;     
+      text-align: center;    
+      bottom: 0px; 
+      width: 100%;
+  }
+
+  .brsmall {
+            display: block;
+            margin-bottom: 2em;
+        }
+
+  .brxsmall {
+      display: block;
+      margin-bottom: 0.5em;
+  }
+
+</style>
 
 </head>
    
@@ -66,17 +85,31 @@
                 <p><span><button id="cap_btn" type="button" class="btn btn-primary">Capture</button></p>
                   
         </div>
+      
+        <span class="brsmall"></span>
         <h2 class="text-center mt-1">Advanced Scheduling</h2>
-
+        <span class="brxsmall"></span>
         
     <div class="text-center mt-1">
         <div class="text-center mt-1">
             <div>
+    
+    <div class="'footer">Open Curtain:</div>
     <form id="timer" action="/login" method="POST"> <!-- submit -->
         <label for="appt"><img src="https://img.icons8.com/pastel-glyph/2x/clock--v2.png" width="30" height="30">Select a time:</label>
         <input type="time" id="appt" name="appt">
         <input type="submit">
         </form>
+    
+    <span class="brxsmall"></span>
+
+    <div class="'footer">Close Curtain:</div>
+    <form id="timer2" action="/login" method="POST"> <!-- submit -->
+      <label for="appt"><img src="https://img.icons8.com/pastel-glyph/2x/clock--v2.png" width="30" height="30">Select a time:</label>
+      <input type="time" id="appt2" name="appt2">
+      <input type="submit">
+      </form>
+    
     </div>
 
         
