@@ -27,9 +27,9 @@
     });
     $(document).ready(function(){
         
-         $("#stop").click(function(){
-          $("#currentState").text("Current State: Stopped")
-           $.post("/stop_junk_transporter",
+         $("#cap_btn").click(function(){
+
+           $.post("/capture",
            {
              name: "client",
              time: "now"
@@ -62,8 +62,12 @@
     <div class="text-center mt-1">
             <p>Curtain State: <span><button id="open_btn" type="button" class="btn btn-primary">Open</button>
                 <button type="button" class="btn btn-primary">Close</button></span></p>
+
+                <p><span><button id="cap_btn" type="button" class="btn btn-primary">Capture</button></p>
+                  
         </div>
         <h2 class="text-center mt-1">Advanced Scheduling</h2>
+
         
     <div class="text-center mt-1">
         <div class="text-center mt-1">
