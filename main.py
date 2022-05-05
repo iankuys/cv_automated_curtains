@@ -2,6 +2,8 @@ from flask import Flask, render_template, request, url_for, redirect
 import cv2 as cv2
 from pylab import *
 import mediapipe as mp
+import keyboard
+
 mp_drawing = mp.solutions.drawing_utils
 mp_hands = mp.solutions.hands
 app = Flask(__name__)
@@ -83,8 +85,10 @@ def capture():
                 if totalFingers == 0 and state == "Play":
                     state = "Pause"
                     print("CLOSING CURTAIN")
-                    break            # if the `q` key was pressed, break from the loop
-
+                    break            
+                if keyboard.read_key() == "q":
+                    print("You pressed q")
+                    break           # if the `q` key was pressed, break from the loop
 if __name__ == "__main__":
    app.run(host='0.0.0.0', port=80, debug=True)
 
