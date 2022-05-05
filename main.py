@@ -26,7 +26,7 @@ def capture():
     result, image = cam.read()
     if result:
         cv.imwrite("filename.png", image)
-    else:
+    else: 
         print("No image detected. Please! try again")
 
     return ("hi")
