@@ -9,3 +9,4 @@ pip install flask
 pip install opencv-python
 pip install mediapipe
 ```
+IF ```pip``` doesnt work try using ```pip3``` instead
