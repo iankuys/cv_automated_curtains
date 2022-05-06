@@ -13,6 +13,7 @@ pip install keyboard
 pip install results
 ```
 IF ```pip``` doesnt work try using ```pip3``` instead
+IF encountering permission related or errors add ```--user``` in the commands above, this helps us run commands as administrator
 
 ### to run
 ```
