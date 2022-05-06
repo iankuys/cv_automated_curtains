@@ -2,6 +2,7 @@
 MAKE SURE THAT PYTHON IS INSTALLED ON YOUR COMPUTER
 https://www.python.org/downloads/
 
+ALSO LEARN TO USE TERMINAL IN VSCODE TO RUN THE CODE
 
 ### to set up
 ```
