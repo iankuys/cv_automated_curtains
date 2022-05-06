@@ -9,6 +9,8 @@ ALSO LEARN TO USE TERMINAL IN VSCODE TO RUN THE CODE
 pip install flask
 pip install opencv-python
 pip install mediapipe
+pip install keyboard
+pip install results
 ```
 IF ```pip``` doesnt work try using ```pip3``` instead
 
