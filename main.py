@@ -39,7 +39,11 @@ def index():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    data = request.form['appt']
+    for key in request.form:
+        if key == 'appt':
+            data = request.form['appt']
+        else:
+            data = request.form['appt2']
     return (data)
 
 @app.route('/open', methods=['GET', 'POST'])
