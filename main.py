@@ -39,11 +39,7 @@ def index():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    for key in request.form:
-        if key == 'appt':
-            data = request.form['appt']
-        else:
-            data = request.form['appt2']
+    data = request.form['appt']
     return (data)
 
 @app.route('/open', methods=['GET', 'POST'])
@@ -92,23 +88,32 @@ def capture():
             #print(lmList)
             if len(lmList) != 0:
                 fingers = []
+
+                #thumb
+                if(lmList[tipIds[0]][1] > lmList[tipIds[0]-1][1]):
+                    fingers.append(1)
+                else:
+                    fingers.append(0)
+
+                #all other 4 fingers
                 for id in range(1, 5):
                     if lmList[tipIds[id]][2] < lmList[tipIds[id] - 2][2]:
                         fingers.append(1)
                     if (lmList[tipIds[id]][2] > lmList[tipIds[id] - 2][2] ):
                         fingers.append(0)
+
                 totalFingers = fingers.count(1)
                 print(totalFingers)
                 #print(lmList[9][2])
                 if totalFingers == 5:
                     state = "Play"
                     print("OPENING CURTAIN")
-                    break
+                    #break
                 # fingers.append(1)
                 if totalFingers == 0 and state == "Play":
                     state = "Pause"
                     print("CLOSING CURTAIN")
-                    break            
+                    #break            
         
     return ("hi")
 if __name__ == "__main__":
