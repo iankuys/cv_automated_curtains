@@ -37,9 +37,14 @@ def index():
     print("hi")
     return render_template('index.html')
 
-@app.route('/login', methods=['GET', 'POST'])
-def login():
+@app.route('/openTimer', methods=['GET', 'POST'])
+def openTimer():
     data = request.form['appt']
+    return (data)
+
+@app.route('/closeTimer', methods=['GET', 'POST'])
+def closeTimer():
+    data = request.form['appt2']
     return (data)
 
 @app.route('/open', methods=['GET', 'POST'])
