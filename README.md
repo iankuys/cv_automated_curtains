@@ -17,6 +17,7 @@ pip install opencv-python
 pip install mediapipe
 pip install keyboard
 pip install results
+pip install RPi.GPIO
 ```
 IF ```pip``` doesnt work try using ```pip3``` instead
 
