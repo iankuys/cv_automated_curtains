@@ -12,10 +12,10 @@ handsModule = mp.solutions.hands
 app = Flask(__name__)
 
 
-tipIds = [4, 8, 12, 16, 20]
+tipIds = [4, 8, 12, 16, 20]     # tip of all fingers from thumb to pinky
 state = None
 Gesture = None
-wCam, hCam = 720, 640
+wCam, hCam = 720, 640           # dimensions of camera
 cap = cv2.VideoCapture(0)
 
 def fingerPosition(image, handNo=0):
@@ -54,26 +54,30 @@ def home():
 
 @app.route('/capture', methods=['GET', 'POST'])
 def capture():     
-    #cap = cv2.VideoCapture(0)
     state = ""
     cap.set(3, wCam)
     cap.set(4, hCam)
     with mp_hands.Hands(
         min_detection_confidence=0.8,
         min_tracking_confidence=0.5) as hands:
-        while cap.isOpened():
-            ret, frame = cap.read()
-            results = hands.process(cv2.cvtColor(frame, cv2.COLOR_BGR2RGB))
-            success, image = cap.read()
+        while cap.isOpened():           # all occurs when the capture button is pressed for now
+            ret, frame = cap.read()     # taking many static picture with camera each time 
+                                        # iterated through with while loop
+
+            results = hands.process(cv2.cvtColor(frame, cv2.COLOR_BGR2RGB))     # converting BGR to RBG
+            success, image = cap.read() 
+
             if not success:
                 print("Ignoring empty camera frame.")
             # If loading a video, use 'break' instead of 'continue'.
                 continue
+
             # Flip the image horizontally for a later selfie-view display, and convert
             # the BGR image to RGB.
             image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
             image.flags.writeable = False
             results = hands.process(image)
+
             # Draw the hand annotations on the image.
             image.flags.writeable = True
             image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
@@ -82,28 +86,27 @@ def capture():
                     mp_drawing.draw_landmarks(
                     image, hand_landmarks, mp_hands.HAND_CONNECTIONS)
                     drawingModule.draw_landmarks(frame, hand_landmarks, handsModule.HAND_CONNECTIONS)
-
             cv2.imshow('Test hand', frame)
 
-            if cv2.waitKey(1) == 27:
-                print("ESC key pressed exiting")
+            if cv2.waitKey(1) == 27:                # supposed to stop when ESC is pressed but doesn't work
+                print("ESC key pressed exiting")    # prob will delete this if statement
                 break
 
             lmList = fingerPosition(image)
             #print(lmList)
             if len(lmList) != 0:
-                fingers = []
+                fingers = []                        # num of fingers up
 
                 #thumb
                 if(lmList[tipIds[0]][1] > lmList[tipIds[0]-1][1]):
-                    fingers.append(1)
+                    fingers.append(1)               # add one if tip id is stretched further than that of inner nodes
                 else:
                     fingers.append(0)
 
                 #all other 4 fingers
                 for id in range(1, 5):
                     if lmList[tipIds[id]][2] < lmList[tipIds[id] - 2][2]:
-                        fingers.append(1)
+                        fingers.append(1)           # add one if tip id is stretched further than that of inner nodes
                     if (lmList[tipIds[id]][2] > lmList[tipIds[id] - 2][2] ):
                         fingers.append(0)
 

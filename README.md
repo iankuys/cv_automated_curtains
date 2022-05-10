@@ -4,6 +4,12 @@ https://www.python.org/downloads/
 
 ALSO LEARN TO USE TERMINAL IN VSCODE TO RUN THE CODE
 
+Project X backend and webapp
+
+main.py used to run web application
+
+
+
 ### to set up
 ```
 pip install flask
