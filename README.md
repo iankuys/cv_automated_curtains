@@ -17,7 +17,8 @@ pip install opencv-python
 pip install mediapipe
 pip install keyboard
 pip install results
-pip install RPi.GPIO
+pip install RPi.GPIO        only on raspberry pi
+
 ```
 IF ```pip``` doesnt work try using ```pip3``` instead
 
