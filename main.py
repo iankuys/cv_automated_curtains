@@ -19,6 +19,9 @@ Gesture = None
 wCam, hCam = 720, 640           # dimensions of camera
 cap = cv2.VideoCapture(0)
 
+def check_schedule_time_with_realtime():
+    pass
+
 def fingerPosition(image, handNo=0):
     lmList = []
     with handsModule.Hands(static_image_mode=False, min_detection_confidence=0.7, min_tracking_confidence=0.7, max_num_hands=2) as hands:
