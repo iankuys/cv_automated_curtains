@@ -52,6 +52,11 @@ def home():
     print("hello from open")
     return ("hi")
 
+@app.route('/close', methods=['GET', 'POST'])
+def close_manual():
+    print("hello from close")
+    return ("hi")
+
 @app.route('/capture', methods=['GET', 'POST'])
 def capture():     
     state = ""
