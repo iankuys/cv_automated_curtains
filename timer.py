@@ -11,11 +11,11 @@ import time
 def getTime():
     return time.asctime()[11:19]
 
-def checkTimeMatches():
-    if getTime() == getPresetTime():
-        return True
-    else:
-        return False
+# def checkTimeMatches():
+#     if getTime() == getPresetTime():
+#         return True
+#     else:
+#         return False
 
 
 if __name__ == "__main__":

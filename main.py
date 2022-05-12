@@ -5,6 +5,7 @@ import mediapipe as mp
 import keyboard
 import results
 from timer import *
+from motor import *
 
 mp_drawing = mp.solutions.drawing_utils
 mp_hands = mp.solutions.hands
@@ -20,7 +21,14 @@ wCam, hCam = 720, 640           # dimensions of camera
 cap = cv2.VideoCapture(0)
 
 def check_schedule_time_with_realtime():
-    pass
+    while True:
+        x = getTime()
+        if x == openTimer():
+            openCurtain()
+            break
+        if x == closeTimer():
+            closeCurtain
+            break
 
 def fingerPosition(image, handNo=0):
     lmList = []

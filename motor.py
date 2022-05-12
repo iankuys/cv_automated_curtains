@@ -18,6 +18,12 @@ GPIO.output(in2,GPIO.LOW)
 # p=GPIO.PWM(en,1000)
 p.start(25)
 
+def openCurtain():
+  pass
+
+def closeCurtain():
+  pass
+
 while True: 
 
 # Opening curtain 
