@@ -24,11 +24,11 @@ cap = cv2.VideoCapture(0)
 
 def check_schedule_time_with_realtime():
     while True:
-        x = getTime()
-        if x == openTimer():
+        x = str(getTime())
+        if x == str(openTimer()):
             openCurtain()
             break
-        if x == closeTimer():
+        if x == str(closeTimer()):
             closeCurtain()
             break
 
