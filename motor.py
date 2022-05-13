@@ -3,13 +3,12 @@ import time
 
 # must instsall RPi.GPIO see README.md under to set up
 
-
+GPIO.cleanup()
 # take a look at this:
 # https://github.com/vishytheswishy/junk-transporter-backend/blob/main/motor.py
-
 ground = 6
-motor_in1 = 7
-motor_in2 = 8
+motor_in1 = 23
+motor_in2 = 24
 motor_enA = 25
 lswitch_gpio27 = 13
 lswitch_gpio22 = 15
@@ -19,16 +18,19 @@ voltage5 = 2
 
 # Motor Setup
 GPIO.setmode(GPIO.BCM)
-GPIO.setup(in1,GPIO.OUT)
-GPIO.setup(in2,GPIO.OUT)
-GPIO.setup(en_a,GPIO.OUT)
-GPIO.output(in1,GPIO.LOW)
-GPIO.output(in2,GPIO.LOW)
+GPIO.setup(motor_in1, GPIO.OUT)
+GPIO.setup(motor_in2, GPIO.OUT)
+GPIO.setup(motor_enA, GPIO.OUT)
+GPIO.output(motor_in1, GPIO.LOW)
+GPIO.output(motor_in2, GPIO.LOW)
+p=GPIO.PWM(motor_enA, 1000)
+
+p.start(25)
 
 # Limit Switch Setup
-# GPIO.setup(lswitch_gpio27, GPIO.OUT)
-# GPIO.setup(lswitch_gpio22, GPIO.OUT)
-# GPIO.setup(voltage5, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+GPIO.setup(lswitch_gpio27, GPIO.OUT)
+GPIO.setup(lswitch_gpio22, GPIO.OUT)
+GPIO.setup(voltage5, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
 # seconds = 10
 # print "reverse"
@@ -44,8 +46,8 @@ GPIO.output(in2,GPIO.LOW)
 # gpio.cleanup()
 
 def startMotor():
-  pwr = GPIO.PWM(motor_enA,1000)
-  pwr.start(25)
+
+  print("starting motor")
 
 def openCurtain():
   pass
@@ -55,13 +57,24 @@ def closeCurtain():
   pass
   # stop when limit switch hit
 
-startMotor()
-while True:
-  if (GPIO.input(lswitch_gpio27)) or (GPIO.input(lswitch_gpio22)):
-    GPIO.cleanup()
-  else:
-    break
-  
+while(1):
+
+    x=input("What mode")
+    s="s"
+
+    if (x == s):
+        GPIO.output(motor_in1, GPIO.HIGH)
+        GPIO.output(motor_in2, GPIO.LOW)
+        print("Starting...")
+
+    else:
+        GPIO.output(motor_in1, GPIO.LOW)
+        GPIO.output(motor_in2, GPIO.HIGH)
+        print("Reversing...")
+
+    print("starting motor")
+
+
 # Opening curtain 
   # Gesture control --> motor starts
   # Timer --> motor starts
