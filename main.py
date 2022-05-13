@@ -144,11 +144,11 @@ def capture():
                     image, hand_landmarks, mp_hands.HAND_CONNECTIONS)
                     drawingModule.draw_landmarks(frame, hand_landmarks, handsModule.HAND_CONNECTIONS)
             cv2.imshow('Test hand', frame)
-
+            '''
             if cv2.waitKey(1) == 27:                # supposed to stop when ESC is pressed but doesn't work
                 print("ESC key pressed exiting")    # prob will delete this if statement
                 break
-
+            '''
             lmList = fingerPosition(image)
             #print(lmList)
             if len(lmList) != 0:
