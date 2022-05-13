@@ -22,17 +22,15 @@ Gesture = None
 wCam, hCam = 720, 640           # dimensions of camera
 cap = cv2.VideoCapture(0)
 
-def check_schedule_time_with_realtime():
-    while True:
-        x = getTime()
-        if x == openTimer():
-            openCurtain()
-            break
-        if x == closeTimer():
-            closeCurtain()
-            break
+def check_schedule_time_with_realtime() -> int:
+    x = str(getTime())
+    if x == str(openTimer()):
+        return True
+    if x == str(closeTimer()):
+        return True
+    return False
 
-def fingerPosition(image, handNo=0):
+def fingerPosition(image, handNo=0) -> list:
     lmList = []
     with handsModule.Hands(static_image_mode=False, min_detection_confidence=0.7, min_tracking_confidence=0.7, max_num_hands=2) as hands:
         ret, frame = cap.read()
@@ -79,6 +77,10 @@ class ChiCurtain:
         GPIO.output(self.motor_in2, GPIO.HIGH)
         print("Reversing...")
 
+    def stopCurtain(self):
+        GPIO.output(self.motor_in1, GPIO.LOW)
+        GPIO.output(self, motor_in2, GPIO.LOW)
+        print("Stop")
 
 
 
@@ -142,11 +144,11 @@ def capture():
                     image, hand_landmarks, mp_hands.HAND_CONNECTIONS)
                     drawingModule.draw_landmarks(frame, hand_landmarks, handsModule.HAND_CONNECTIONS)
             cv2.imshow('Test hand', frame)
-
+            '''
             if cv2.waitKey(1) == 27:                # supposed to stop when ESC is pressed but doesn't work
                 print("ESC key pressed exiting")    # prob will delete this if statement
                 break
-
+            '''
             lmList = fingerPosition(image)
             #print(lmList)
             if len(lmList) != 0:
@@ -176,7 +178,8 @@ def capture():
                 if totalFingers == 0 and state == "Play":
                     state = "Pause"
                     print("CLOSING CURTAIN")
-                    #break            
+                    #break     
+                           
     return ("hi")
 if __name__ == "__main__":
    app.run(host='0.0.0.0', port=80, debug=True)

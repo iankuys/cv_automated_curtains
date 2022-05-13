@@ -9,13 +9,7 @@ import time
 # https://docs.python.org/3/library/time.html
 
 def getTime():
-    return time.asctime()[11:19]
-
-# def checkTimeMatches():
-#     if getTime() == getPresetTime():
-#         return True
-#     else:
-#         return False
+    return time.asctime()[11:16]
 
 
 if __name__ == "__main__":
