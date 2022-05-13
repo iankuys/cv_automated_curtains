@@ -79,24 +79,46 @@
       margin-bottom: 0.5em;
   }
 
+  button{
+      display: inline-block;
+      background-color: #7b38d8;
+      border-radius: 10px;
+      border: 3px double #ffffff;
+      color: #ffffff;
+      text-align: center;
+      font-size: 22px;
+
+      height: 50px;
+      -webkit-transition: all 0.5s;
+      -moz-transition: all 0.5s;
+      -o-transition: all 0.5s;
+      transition: all 0.5s;
+      cursor: pointer;
+      margin: 5px;
+    }
+
+    .button-txt{
+      font-size: 15pt;
+      font-weight:500;
+    }
+
 </style>
 
 </head>
    
 <body>
-    <h1 class="text-center mt-1">The Chi Curtain</h1>
+    <h1 class="text-center mt-1">The Carin' Curtain</h1>
 
     <div class="text-center">
     <img src="Chi_Class.png" width="270" height="225">
-    <p>Status: </p>
-    <p>Reset to default: <span><button type="button" class="btn btn-primary">Reset</button></span></p>
+    <span class="brsmall"></span>
+    <p class="button-txt">Reset to default: <span><button type="button" >Reset</button></span></p>
     </div>
     <div class="text-center mt-1">
-            <p>Curtain State: <span><button id="open_btn" type="button" class="btn btn-primary">Open</button>
-                <button id='close_btn' type="button" class="btn btn-primary">Close</button></span></p>
+            <p class="button-txt">Curtain State: <span><button id="open_btn" type="button" >Open</button>
+                <button id='close_btn' type="button" >Close</button></span></p>
 
-                <p><span><button id="cap_btn" type="button" class="btn btn-primary">Capture</button></p>
-                  
+                <p><span><button id="cap_btn" type="button" >Capture</button></p>
         </div>
       
         <span class="brsmall"></span>
@@ -117,10 +139,12 @@
     <span class="brxsmall"></span>
 
     <div class="'footer">Close Curtain:</div>
+
     <form id="timer2" action="/closeTimer" method="POST"> <!-- submit -->
       <label for="appt"><img src="https://img.icons8.com/pastel-glyph/2x/clock--v2.png" width="30" height="30">Select a time:</label>
       <input type="time" id="appt2" name="appt2">
       <input type="submit">
+
       </form>
     
     </div>

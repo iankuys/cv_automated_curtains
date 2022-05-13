@@ -1,36 +1,77 @@
 import RPi.GPIO as GPIO
+from time import sleep
 
 # must instsall RPi.GPIO see README.md under to set up
 
-
+GPIO.cleanup()
 # take a look at this:
 # https://github.com/vishytheswishy/junk-transporter-backend/blob/main/motor.py
+ground = 6
+motor_in1 = 23
+motor_in2 = 24
+motor_enA = 25
+lswitch_gpio27 = 13
+lswitch_gpio22 = 15
+driver_gpio23 = 16
+driver_gpio24 = 18
+voltage5 = 2
 
-
-import RPi.GPIO as GPIO    
-
+# Motor Setup
 GPIO.setmode(GPIO.BCM)
-GPIO.setup(in1,GPIO.OUT)
-GPIO.setup(in2,GPIO.OUT)
-GPIO.setup(en,GPIO.OUT)
-GPIO.output(in1,GPIO.LOW)
-GPIO.output(in2,GPIO.LOW)
-# p=GPIO.PWM(en,1000)
-p.start(25)
+GPIO.setup(motor_in1, GPIO.OUT)
+GPIO.setup(motor_in2, GPIO.OUT)
+GPIO.setup(motor_enA, GPIO.OUT)
+GPIO.output(motor_in1, GPIO.LOW)
+GPIO.output(motor_in2, GPIO.LOW)
 
-def openCurtain():
-  pass
+pwr =GPIO.PWM(motor_enA, 1000)
+pwr.start(25)
 
-def closeCurtain():
-  pass
+# Limit Switch Setup
+GPIO.setup(lswitch_gpio27, GPIO.OUT) # in or out
+GPIO.setup(lswitch_gpio22, GPIO.OUT) # in or out
+GPIO.setup(voltage5, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
-while True: 
+#GPIO.setup(lswitch_gpio22, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+#GPIO.setup(lswitch_gpio22, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 
-# Opening curtain 
-  # Gesture control --> motor starts
-  # Timer --> motor starts
+# Code found online for changing limit switches
+"""
+gpio.setmode(gpio.BCM)
+gpio.setup(17, gpio.OUT)
+gpio.setup(22, gpio.OUT)
+gpio.setup(21, gpio.IN, pull_up_down=GPIO.PUD_UP)
+ 
+seconds = 10
+print "reverse"
+gpio.output(17, False)
+gpio.output(22, True)
+while seconds > 0:
+    if gpio.input(21) == 0:     
+        gpio.output(17, False)
+        gpio.output(22, False)
+        seconds = -1
+    seconds = seconds - 1
+    time.sleep(0.5)
 
-# When the curtain is extending and limit switch is hit --> motor stops
-# When the curtain is retracting and limit switch is hit --> motor stops
+gpio.cleanup()
+"""
 
-# If disconnected break
+while(!GPIO.input(lswitch_gpio27) and !GPIO.input(lswitch_gpio22)): # While both limit switches are not pressed
+
+    x=input("What mode?")
+
+    if (x == "s"):
+        GPIO.output(motor_in1, GPIO.HIGH)
+        GPIO.output(motor_in2, GPIO.LOW)
+        print("Starting...")
+    else:
+        GPIO.output(motor_in1, GPIO.LOW)
+        GPIO.output(motor_in2, GPIO.HIGH)
+        print("Reversing...")
+
+    print("starting motor")
+
+GPIO.output(motor_in1, GPIO.LOW)
+GPIO.output(motor_in2, GPIO.LOW)
+GPIO.cleanup()
