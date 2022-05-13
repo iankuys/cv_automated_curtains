@@ -23,14 +23,12 @@ wCam, hCam = 720, 640           # dimensions of camera
 cap = cv2.VideoCapture(0)
 
 def check_schedule_time_with_realtime():
-    while True:
-        x = str(getTime())
-        if x == str(openTimer()):
-            openCurtain()
-            break
-        if x == str(closeTimer()):
-            closeCurtain()
-            break
+    x = str(getTime())
+    if x == str(openTimer()):
+        return True
+    if x == str(closeTimer()):
+        return True
+    return False
 
 def fingerPosition(image, handNo=0):
     lmList = []
