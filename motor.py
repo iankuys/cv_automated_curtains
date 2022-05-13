@@ -4,6 +4,7 @@ from time import sleep
 # must instsall RPi.GPIO see README.md under to set up
 
 GPIO.cleanup()
+# sets variables to input/output pins
 # take a look at this:
 # https://github.com/vishytheswishy/junk-transporter-backend/blob/main/motor.py
 ground = 6
@@ -36,6 +37,7 @@ GPIO.setup(voltage5, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 #GPIO.setup(lswitch_gpio22, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 
 # Code found online for changing limit switches
+
 """
 gpio.setmode(gpio.BCM)
 gpio.setup(17, gpio.OUT)
@@ -59,19 +61,21 @@ gpio.cleanup()
 
 while(!GPIO.input(lswitch_gpio27) and !GPIO.input(lswitch_gpio22)): # While both limit switches are not pressed
 
-    x=input("What mode?")
+    x=input('Enter "o" for open and "c" for close: ')    # asks for input and stores into x 
 
-    if (x == "s"):
-        GPIO.output(motor_in1, GPIO.HIGH)
-        GPIO.output(motor_in2, GPIO.LOW)
-        print("Starting...")
-    else:
-        GPIO.output(motor_in1, GPIO.LOW)
-        GPIO.output(motor_in2, GPIO.HIGH)
-        print("Reversing...")
+    if (x == "o"):      # if open
+        GPIO.output(motor_in1, GPIO.HIGH)       # turns on motor opening
+        GPIO.output(motor_in2, GPIO.LOW)        # turns off motor closing
+        print("opening...")
+    else:               # if close
+        GPIO.output(motor_in1, GPIO.LOW)        # turns off motor opening
+        GPIO.output(motor_in2, GPIO.HIGH)       # turns on motor closing
+        print("closing...")
 
     print("starting motor")
 
-GPIO.output(motor_in1, GPIO.LOW)
+
+# clean up turning off motors and clean up
+GPIO.output(motor_in1, GPIO.LOW)        
 GPIO.output(motor_in2, GPIO.LOW)
 GPIO.cleanup()
