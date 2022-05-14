@@ -37,7 +37,6 @@ button{
 .button-txt{
     font-size: 15pt;
     font-weight:500;
-    background: #ffffff;
 }
 
 
@@ -63,4 +62,15 @@ body {
     100% {
         background-position: 0% 50%;
     }
+}
+
+h3 {
+text-decoration: underline;
+border: 3px double #000000;
+background: #7b38d8;
+max-width: 200px;
+margin: 20px auto;
+padding: 10px;
+color:#000000;
+font-size: 25px;
 }
