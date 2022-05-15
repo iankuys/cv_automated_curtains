@@ -32,7 +32,7 @@ GPIO.setup(lswitch_gpio22, GPIO.IN) # in or out
 GPIO.setup(voltage5, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
 # Working Motor and Limit Switches
-def josh_function(state):
+def josh_function():
     print("switch 1 state:", lswitch1_pressed)
     print("switch 2 state:", lswitch2_pressed)
 
@@ -57,17 +57,17 @@ if __name__ == "__main__":
     lswitch2_pressed = not(GPIO.input(lswitch_gpio22))
     while True:
         state = input('Enter "o" for open and "c" for close: ') 
-        if (state == "c") and (lswitch1_pressed): # Curtain open switch is 
-            pass
-        elif (state == "o") and (lswitch2_pressed):
-            pass
-        elif (state == "o"):
-            GPIO.output(motor_in1, GPIO.HIGH)       
-            GPIO.output(motor_in2, GPIO.LOW)
-            josh_function(state)
-        elif (state == "c"):
-            GPIO.output(motor_in1, GPIO.LOW)       
-            GPIO.output(motor_in2, GPIO.HIGH)
-            josh_function(state)
+        # if (state == "c") and (lswitch1_pressed): # Curtain open switch is 
+        #     pass
+        # elif (state == "o") and (lswitch2_pressed):
+        #     pass
+        # elif (state == "o"):
+        #     GPIO.output(motor_in1, GPIO.HIGH)       
+        #     GPIO.output(motor_in2, GPIO.LOW)
+        #     josh_function(state)
+        # elif (state == "c"):
+        #     GPIO.output(motor_in1, GPIO.LOW)       
+        #     GPIO.output(motor_in2, GPIO.HIGH)
+        josh_function()
 
     GPIO.cleanup()
