@@ -11,11 +11,11 @@ ground = 6
 motor_in1 = 23
 motor_in2 = 24
 motor_enA = 25
-lswitch_gpio27 = 13
-lswitch_gpio22 = 15
-driver_gpio23 = 16
-driver_gpio24 = 18
-voltage5 = 2
+lswitch_gpio27 = 27
+lswitch_gpio22 = 22
+# driver_gpio23 = 16
+# driver_gpio24 = 18
+# voltage5 = 2
 
 # Motor Setup
 GPIO.setmode(GPIO.BCM)
