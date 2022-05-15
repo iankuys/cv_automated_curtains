@@ -1,3 +1,4 @@
+from xml.etree.ElementTree import Comment
 from flask import Flask, render_template, request, url_for, redirect
 import cv2 as cv2
 from pylab import *
@@ -9,6 +10,7 @@ import RPi.GPIO as GPIO
 import datetime
 from time import sleep
 import schedule
+from crontab import CronTab
 
 mp_drawing = mp.solutions.drawing_utils
 mp_hands = mp.solutions.hands
@@ -46,6 +48,12 @@ def fingerPosition(image, handNo=0) -> list:
                 lmList.append([id, cx, cy])
     return lmList
 
+def cronConfig(x,y):
+    cron = CronTab(user='pi')
+    cron.new(command='python3 motor.py', comment='turn on motor.py')
+    job.setall(x, y, None, None, None)
+    cron.write()
+
 def job():
     print("it is time!")
     isTime = False
@@ -68,9 +76,6 @@ class ChiCurtain:
         GPIO.setup(self.motor_enA, GPIO.OUT)
         GPIO.output(self.motor_in1, GPIO.LOW)
         GPIO.output(self.motor_in2, GPIO.LOW)
-
-
-
    
     def openCurtain(self):
         GPIO.output(self.motor_in1, GPIO.HIGH)
@@ -84,7 +89,7 @@ class ChiCurtain:
 
     def stopCurtain(self):
         GPIO.output(self.motor_in1, GPIO.LOW)
-        GPIO.output(self, motor_in2, GPIO.LOW)
+        GPIO.output(self.motor_in2, GPIO.LOW)
         print("Stop")
 
 @app.route('/', methods=['GET', 'POST'])
@@ -95,18 +100,18 @@ def index():
 @app.route('/openTimer', methods=['GET', 'POST'])
 def openTimer():
     data = request.form['appt']
-    return redirect(url_for('timerCheck', x=data)) #testing something
+    data_split = data.split(':')
+    return redirect(url_for('timerCheck', x=data_split[0], y=data_split[1])) #testing something
 
 @app.route('/closeTimer', methods=['GET', 'POST'])
 def closeTimer():
     data = request.form['appt2']
     return (data)
 
-@app.route('/timerCheck/<x>')
+@app.route('/timerCheck/<x>/<y>')
 def timerCheck(x):
 
-    while (x != getTime()):
-        time.sleep(1)
+
 
     return("success")
     
