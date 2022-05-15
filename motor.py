@@ -59,14 +59,15 @@ while seconds > 0:
 gpio.cleanup()
 """
 
-if GPIO.input(lswitch_gpio27):
-    print("true1")
-else:
-    print("false1")
-if GPIO.input(lswitch_gpio22):
-    print("true2")
-else:
-    print("false2")
+while True:
+    if GPIO.input(lswitch_gpio27):
+        print("true1")
+    else:
+        print("false1")
+    if GPIO.input(lswitch_gpio22):
+        print("true2")
+    else:
+        print("false2")
 
 print("first switch: ")
 print(GPIO.input(lswitch_gpio27))
