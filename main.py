@@ -6,30 +6,32 @@ import keyboard
 import results
 from timer import *
 import RPi.GPIO as GPIO
+import datetime
 from time import sleep
-
+import schedule
 
 mp_drawing = mp.solutions.drawing_utils
 mp_hands = mp.solutions.hands
 drawingModule = mp.solutions.drawing_utils
 handsModule = mp.solutions.hands
 app = Flask(__name__)
+isTime = True
 
 
 tipIds = [4, 8, 12, 16, 20]     # tip of all fingers from thumb to pinky
 state = None
 Gesture = None
 wCam, hCam = 720, 640           # dimensions of camera
-cap = cv2.VideoCapture(0)
+cap = cv2.VideoCapture(-1)
 
-def check_schedule_time_with_realtime() -> int:
-    x = str(getTime())
-    if x == str(openTimer()):
-        return True
-    if x == str(closeTimer()):
-        return True
-    return False
-
+# def check_schedule_time_with_realtime() -> bool:
+#     x = str(getTime())
+#     print(x)
+#     if x == str(openTimer()):
+#         return True
+#     if x == str(closeTimer()):
+#         return True
+#     return False
 def fingerPosition(image, handNo=0) -> list:
     lmList = []
     with handsModule.Hands(static_image_mode=False, min_detection_confidence=0.7, min_tracking_confidence=0.7, max_num_hands=2) as hands:
@@ -44,6 +46,9 @@ def fingerPosition(image, handNo=0) -> list:
                 lmList.append([id, cx, cy])
     return lmList
 
+def job():
+    print("it is time!")
+    isTime = False
 
 class ChiCurtain:
     def __init__(self):
@@ -82,8 +87,6 @@ class ChiCurtain:
         GPIO.output(self, motor_in2, GPIO.LOW)
         print("Stop")
 
-
-
 @app.route('/', methods=['GET', 'POST'])
 def index():
     print("hi")
@@ -92,12 +95,21 @@ def index():
 @app.route('/openTimer', methods=['GET', 'POST'])
 def openTimer():
     data = request.form['appt']
-    return (data)
+    return redirect(url_for('timerCheck', x=data)) #testing something
 
 @app.route('/closeTimer', methods=['GET', 'POST'])
 def closeTimer():
     data = request.form['appt2']
     return (data)
+
+@app.route('/timerCheck/<x>')
+def timerCheck(x):
+
+    while (x != getTime()):
+        time.sleep(1)
+
+    return("success")
+    
 
 @app.route('/open', methods=['GET', 'POST'])
 def home():
@@ -181,6 +193,7 @@ def capture():
                     #break     
                            
     return ("hi")
+
 if __name__ == "__main__":
-   app.run(host='0.0.0.0', port=80, debug=True)
+    app.run(host='0.0.0.0', port=80, debug=True)
 
