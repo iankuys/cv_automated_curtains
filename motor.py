@@ -29,8 +29,8 @@ pwr =GPIO.PWM(motor_enA, 1000)
 pwr.start(25)
 
 # Limit Switch Setup
-GPIO.setup(lswitch_gpio27, GPIO.OUT) # in or out
-GPIO.setup(lswitch_gpio22, GPIO.OUT) # in or out
+GPIO.setup(lswitch_gpio27, GPIO.IN) # in or out
+GPIO.setup(lswitch_gpio22, GPIO.IN) # in or out
 GPIO.setup(voltage5, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
 # GPIO.setup(lswitch_gpio22, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
