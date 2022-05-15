@@ -1,5 +1,6 @@
 import RPi.GPIO as GPIO
 from time import sleep
+import time
 
 # must instsall RPi.GPIO see README.md under to set up
 
@@ -81,7 +82,13 @@ while True: # While both limit switches are not pressed
     print("second switch: ")
     print(GPIO.input(lswitch_gpio22))
 
-    x=input('Enter "o" for open and "c" for close: ')    # asks for input and stores into x 
+    start_time = time.time()
+    x = input('brandons input: ')
+    while time.times() - start_time < 1:
+        print(f'changed state to {x}')
+
+    x = x
+    # x=input('Enter "o" for open and "c" for close: ')    # asks for input and stores into x 
     print("GIVE ME AN INPUT")
     if not GPIO.input(lswitch_gpio27) or not GPIO.input(lswitch_gpio22):
         GPIO.output(motor_in1, GPIO.LOW)        # turns off motor opening
