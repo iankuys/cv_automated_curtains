@@ -46,16 +46,18 @@ def josh_function():
             print("closing curtain...")
 
         if not GPIO.input(lswitch_gpio27) or not GPIO.input(lswitch_gpio22):
-            # GPIO.output(motor_in1, GPIO.LOW)       
-            # GPIO.output(motor_in2, GPIO.LOW)
+            GPIO.output(motor_in1, GPIO.LOW)       
+            GPIO.output(motor_in2, GPIO.LOW)
             break
 
 
-while True:
-    state = input('Enter "o" for open and "c" for close: ') 
-    if (state == "o" and not(GPIO.input(lswitch_gpio27))) or (state == "c" and not(GPIO.input(lswitch_gpio22))):
-        pass
-    else:
-        josh_function()
+if __name__ == "__main__":
+    while True:
+        state = input('Enter "o" for open and "c" for close: ') 
 
-GPIO.cleanup()
+        if (state == "o" and not(GPIO.input(lswitch_gpio27))) or (state == "c" and not(GPIO.input(lswitch_gpio22))):
+            pass
+        else:
+            josh_function()
+
+    GPIO.cleanup()
