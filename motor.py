@@ -59,7 +59,7 @@ while seconds > 0:
 gpio.cleanup()
 """
 
-while not(GPIO.input(lswitch_gpio27) and GPIO.input(lswitch_gpio22)): # While both limit switches are not pressed
+while (GPIO.input(lswitch_gpio27) and GPIO.input(lswitch_gpio22)): # While both limit switches are not pressed
 
     x=input('Enter "o" for open and "c" for close: ')    # asks for input and stores into x 
 
