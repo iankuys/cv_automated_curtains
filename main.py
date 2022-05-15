@@ -6,7 +6,7 @@ import mediapipe as mp
 import keyboard
 import results
 from timer import *
-# import RPi.GPIO as GPIO #ONLY WORKS IN RPI
+import RPi.GPIO as GPIO #ONLY WORKS IN RPI
 import datetime
 from time import sleep
 from crontab import CronTab #FOR CRON ONLY WORKS IN RPI
@@ -56,41 +56,41 @@ def cronConfig(x,y):
     job.setall(x, y, None, None, None)
     cron.write()
 
-# class ChiCurtain:
+class ChiCurtain:
 
-#     #initialization of Pi IO ports
-#     def __init__(self):
-#         isMoving = False
-#         self.ground = 6
-#         self.motor_in1 = 23
-#         self.motor_in2 = 24
-#         self.motor_enA = 25
-#         self.lswitch_gpio27 = 13
-#         self.lswitch_gpio22 = 15
-#         self.driver_gpio23 = 16
-#         self.driver_gpio24 = 18
-#         self.voltage5 = 2
-#         GPIO.setmode(GPIO.BCM)
-#         GPIO.setup(self.motor_in1, GPIO.OUT)
-#         GPIO.setup(self.motor_in2, GPIO.OUT)
-#         GPIO.setup(self.motor_enA, GPIO.OUT)
-#         GPIO.output(self.motor_in1, GPIO.LOW)
-#         GPIO.output(self.motor_in2, GPIO.LOW)
+    #initialization of Pi IO ports
+    def __init__(self):
+        isMoving = False
+        self.ground = 6
+        self.motor_in1 = 23
+        self.motor_in2 = 24
+        self.motor_enA = 25
+        self.lswitch_gpio27 = 13
+        self.lswitch_gpio22 = 15
+        self.driver_gpio23 = 16
+        self.driver_gpio24 = 18
+        self.voltage5 = 2
+        GPIO.setmode(GPIO.BCM)
+        GPIO.setup(self.motor_in1, GPIO.OUT)
+        GPIO.setup(self.motor_in2, GPIO.OUT)
+        GPIO.setup(self.motor_enA, GPIO.OUT)
+        GPIO.output(self.motor_in1, GPIO.LOW)
+        GPIO.output(self.motor_in2, GPIO.LOW)
    
-#     def openCurtain(self):
-#         GPIO.output(self.motor_in1, GPIO.HIGH)
-#         GPIO.output(self.motor_in2, GPIO.LOW)
-#         print("Starting...")
+    def openCurtain(self):
+        GPIO.output(self.motor_in1, GPIO.HIGH)
+        GPIO.output(self.motor_in2, GPIO.LOW)
+        print("Starting...")
 
-#     def closeCurtain(self):
-#         GPIO.output(self.motor_in1, GPIO.LOW)
-#         GPIO.output(self.motor_in2, GPIO.HIGH)
-#         print("Reversing...")
+    def closeCurtain(self):
+        GPIO.output(self.motor_in1, GPIO.LOW)
+        GPIO.output(self.motor_in2, GPIO.HIGH)
+        print("Reversing...")
 
-#     def stopCurtain(self):
-#         GPIO.output(self.motor_in1, GPIO.LOW)
-#         GPIO.output(self.motor_in2, GPIO.LOW)
-#         print("Stop")
+    def stopCurtain(self):
+        GPIO.output(self.motor_in1, GPIO.LOW)
+        GPIO.output(self.motor_in2, GPIO.LOW)
+        print("Stop")
 
 #route for homepage
 @app.route('/', methods=['GET', 'POST'])
