@@ -29,12 +29,12 @@ pwr =GPIO.PWM(motor_enA, 1000)
 pwr.start(25)
 
 # Limit Switch Setup
-# GPIO.setup(lswitch_gpio27, GPIO.OUT) # in or out
-# GPIO.setup(lswitch_gpio22, GPIO.OUT) # in or out
-# GPIO.setup(voltage5, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+GPIO.setup(lswitch_gpio27, GPIO.OUT) # in or out
+GPIO.setup(lswitch_gpio22, GPIO.OUT) # in or out
+GPIO.setup(voltage5, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
-GPIO.setup(lswitch_gpio22, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
-GPIO.setup(lswitch_gpio22, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+# GPIO.setup(lswitch_gpio22, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+# GPIO.setup(lswitch_gpio22, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 
 # Code found online for changing limit switches
 
@@ -58,7 +58,10 @@ while seconds > 0:
 
 gpio.cleanup()
 """
-
+print("first switch: ")
+print(GPIO.input(lswitch_gpio27))
+print("second switch: ")
+print(GPIO.input(lswitch_gpio22))
 while not (GPIO.input(lswitch_gpio27) or GPIO.input(lswitch_gpio22)): # While both limit switches are not pressed
 
     x=input('Enter "o" for open and "c" for close: ')    # asks for input and stores into x 
