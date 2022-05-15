@@ -32,20 +32,20 @@ GPIO.setup(lswitch_gpio22, GPIO.IN) # in or out
 GPIO.setup(voltage5, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
 # Working Motor and Limit Switches
-def josh_function():
-    print("switch 1 state:", GPIO.input(lswitch_gpio27))
-    print("switch 2 state:", GPIO.input(lswitch_gpio22))
+def josh_function(state):
+    print("switch 1 state:", lswitch1_pressed)
+    print("switch 2 state:", lswitch2_pressed)
 
     while True:
         if state == "o":
             GPIO.output(motor_in1, GPIO.HIGH)       
-            GPIO.output(motor_in2, GPIO.LOW)        
+            GPIO.output(motor_in2, GPIO.LOW)
             print("opening curtain...")
         elif state == "c":
             GPIO.output(motor_in1, GPIO.LOW)       
             GPIO.output(motor_in2, GPIO.HIGH)
             print("closing curtain...")
-        if not GPIO.input(lswitch_gpio27) or not GPIO.input(lswitch_gpio22):
+        if lswitch1_pressed or not lswitch2_pressed:
             GPIO.output(motor_in1, GPIO.LOW)       
             GPIO.output(motor_in2, GPIO.LOW)
             break
@@ -53,17 +53,21 @@ def josh_function():
 
 
 if __name__ == "__main__":
+    lswitch1_pressed = not(GPIO.input(lswitch_gpio27))
+    lswitch2_pressed = not(GPIO.input(lswitch_gpio22))
     while True:
         state = input('Enter "o" for open and "c" for close: ') 
-        if (state == "o" and not(GPIO.input(lswitch_gpio27))) or (state == "c" and not(GPIO.input(lswitch_gpio22))):
+        if (state == "c") and (lswitch1_pressed): # Curtain open switch is 
             pass
-        elif state == "o":
+        elif (state == "o") and (lswitch2_pressed):
+            pass
+        elif (state == "o"):
             GPIO.output(motor_in1, GPIO.HIGH)       
             GPIO.output(motor_in2, GPIO.LOW)
-            josh_function()
-        elif state == "c":
+            josh_function(state)
+        elif (state == "c"):
             GPIO.output(motor_in1, GPIO.LOW)       
             GPIO.output(motor_in2, GPIO.HIGH)
-            josh_function()
+            josh_function(state)
 
     GPIO.cleanup()
