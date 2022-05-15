@@ -46,8 +46,8 @@ def josh_function():
             print("closing curtain...")
 
         if not GPIO.input(lswitch_gpio27) or not GPIO.input(lswitch_gpio22):
-            GPIO.output(motor_in1, GPIO.LOW)       
-            GPIO.output(motor_in2, GPIO.LOW)
+            # GPIO.output(motor_in1, GPIO.LOW)       
+            # GPIO.output(motor_in2, GPIO.LOW)
             break
 
 
