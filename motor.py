@@ -54,6 +54,8 @@ def josh_function():
 while True:
     state = input('Enter "o" for open and "c" for close: ') 
     if (state == "o" and not(GPIO.input(lswitch_gpio27))) or (state == "c" and not(GPIO.input(lswitch_gpio22))):
+        pass
+    else:
         josh_function()
 
 GPIO.cleanup()
