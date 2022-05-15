@@ -18,6 +18,7 @@ pip install mediapipe
 pip install keyboard
 pip install results
 pip install RPi.GPIO        only on raspberry pi
+pip install python-crontab  only on raspberry pi
 
 ```
 IF ```pip``` doesnt work try using ```pip3``` instead
