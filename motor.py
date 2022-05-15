@@ -81,7 +81,7 @@ while True: # While both limit switches are not pressed
     print(GPIO.input(lswitch_gpio22))
 
     x=input('Enter "o" for open and "c" for close: ')    # asks for input and stores into x 
-    if (GPIO.input(lswitch_gpio27) or GPIO.input(lswitch_gpio22)):
+    if (not GPIO.input(lswitch_gpio27) or not GPIO.input(lswitch_gpio22)):
         break
     if (x == "o"):      # if open
         GPIO.output(motor_in1, GPIO.HIGH)       # turns on motor opening
