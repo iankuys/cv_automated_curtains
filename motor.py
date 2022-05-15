@@ -42,6 +42,8 @@ GPIO.setup(voltage5, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
 def josh_function():
     state = input('Enter "o" for open and "c" for close: ') 
+    print("switch 1 state:", GPIO.input(lswitch_gpio27))
+    print("switch 2 state:", GPIO.input(lswitch_gpio22))
 
     while True:
         if state == "o":
@@ -53,7 +55,7 @@ def josh_function():
             GPIO.output(motor_in2, GPIO.HIGH)
             print("closing curtain...")
 
-        if GPIO.input(lswitch_gpio27) or GPIO.input(lswitch_gpio22):
+        if not GPIO.input(lswitch_gpio27) or not GPIO.input(lswitch_gpio22):
             GPIO.output(motor_in1, GPIO.LOW)       
             GPIO.output(motor_in2, GPIO.LOW)
             break
@@ -62,8 +64,8 @@ def josh_function():
         
 print("hello wowrld")
 
-# while True:
-#     josh_function()
+while True:
+    josh_function()
 
 
 
@@ -118,7 +120,6 @@ while True: # While both limit switches are not pressed
         print(f'changed state to {x}')
         start_time = time.time()
 
-    x = x
     # x=input('Enter "o" for open and "c" for close: ')    # asks for input and stores into x 
     print("GIVE ME AN INPUT")
     if not GPIO.input(lswitch_gpio27) or not GPIO.input(lswitch_gpio22):
