@@ -40,7 +40,7 @@ GPIO.setup(voltage5, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 # Code found online for changing limit switches
 
 
-def josh_function():
+def josh_function():            # working stop switch
     state = input('Enter "o" for open and "c" for close: ') 
     print("switch 1 state:", GPIO.input(lswitch_gpio27))
     print("switch 2 state:", GPIO.input(lswitch_gpio22))
@@ -61,7 +61,6 @@ def josh_function():
             break
 
 
-        
 print("hello wowrld")
 
 while True:
