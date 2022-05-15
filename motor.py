@@ -32,7 +32,6 @@ GPIO.setup(voltage5, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
 # Working Motor and Limit Switches
 def josh_function():
-    state = input('Enter "o" for open and "c" for close: ') 
     print("switch 1 state:", GPIO.input(lswitch_gpio27))
     print("switch 2 state:", GPIO.input(lswitch_gpio22))
 
@@ -53,6 +52,8 @@ def josh_function():
 
 
 while True:
-    josh_function()
+    state = input('Enter "o" for open and "c" for close: ') 
+    if (state == "o" and not(GPIO.input(lswitch_gpio27))) or (state == "c" and not(GPIO.input(lswitch_gpio22))):
+        josh_function()
 
 GPIO.cleanup()
