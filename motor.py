@@ -62,9 +62,8 @@ def josh_function():
         
 print("hello wowrld")
 
-
-while True:
-    josh_function()
+# while True:
+#     josh_function()
 
 
 
@@ -107,34 +106,34 @@ gpio.cleanup()
 # print("second switch: ")
 # print(GPIO.input(lswitch_gpio22))
 
-# while True: # While both limit switches are not pressed
-#     print("first switch: ")
-#     print(GPIO.input(lswitch_gpio27))
-#     print("second switch: ")
-#     print(GPIO.input(lswitch_gpio22))
+while True: # While both limit switches are not pressed
+    print("first switch: ")
+    print(GPIO.input(lswitch_gpio27))
+    print("second switch: ")
+    print(GPIO.input(lswitch_gpio22))
 
-#     start_time = time.time()
-#     x = input('brandons input: ')
-#     while time.time() - start_time < 1:
-#         print(f'changed state to {x}')
-#         start_time = time.time()
+    start_time = time.time()
+    x = input('brandons input: ')
+    while time.time() - start_time < 1:
+        print(f'changed state to {x}')
+        start_time = time.time()
 
-#     x = x
-#     # x=input('Enter "o" for open and "c" for close: ')    # asks for input and stores into x 
-#     print("GIVE ME AN INPUT")
-#     if not GPIO.input(lswitch_gpio27) or not GPIO.input(lswitch_gpio22):
-#         GPIO.output(motor_in1, GPIO.LOW)        # turns off motor opening
-#         GPIO.output(motor_in2, GPIO.LOW)
-#     elif (x == "o"):      # if open
-#         GPIO.output(motor_in1, GPIO.HIGH)       # turns on motor opening
-#         GPIO.output(motor_in2, GPIO.LOW)        # turns off motor closing
-#         print("opening curtain...")
-#     else:               # if close
-#         GPIO.output(motor_in1, GPIO.LOW)        # turns off motor opening
-#         GPIO.output(motor_in2, GPIO.HIGH)       # turns on motor closing
-#         print("closing curtain...")
+    x = x
+    # x=input('Enter "o" for open and "c" for close: ')    # asks for input and stores into x 
+    print("GIVE ME AN INPUT")
+    if not GPIO.input(lswitch_gpio27) or not GPIO.input(lswitch_gpio22):
+        GPIO.output(motor_in1, GPIO.LOW)        # turns off motor opening
+        GPIO.output(motor_in2, GPIO.LOW)
+    elif (x == "o"):      # if open
+        GPIO.output(motor_in1, GPIO.HIGH)       # turns on motor opening
+        GPIO.output(motor_in2, GPIO.LOW)        # turns off motor closing
+        print("opening curtain...")
+    else:               # if close
+        GPIO.output(motor_in1, GPIO.LOW)        # turns off motor opening
+        GPIO.output(motor_in2, GPIO.HIGH)       # turns on motor closing
+        print("closing curtain...")
 
-#     print("starting motor")
+    print("starting motor")
 
 # while (GPIO.input(lswitch_gpio27) or GPIO.input(lswitch_gpio22)): # While both limit switches are not pressed
 
