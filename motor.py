@@ -1,4 +1,5 @@
 import RPi.GPIO as GPIO
+from time import sleep
 
 # must instsall RPi.GPIO see README.md under to set up
 
@@ -44,20 +45,25 @@ def josh_function():
             GPIO.output(motor_in1, GPIO.LOW)       
             GPIO.output(motor_in2, GPIO.HIGH)
             print("closing curtain...")
-
         if not GPIO.input(lswitch_gpio27) or not GPIO.input(lswitch_gpio22):
             GPIO.output(motor_in1, GPIO.LOW)       
             GPIO.output(motor_in2, GPIO.LOW)
             break
 
 
+
 if __name__ == "__main__":
     while True:
         state = input('Enter "o" for open and "c" for close: ') 
-
         if (state == "o" and not(GPIO.input(lswitch_gpio27))) or (state == "c" and not(GPIO.input(lswitch_gpio22))):
             pass
-        else:
+        elif state == "o":
+            GPIO.output(motor_in1, GPIO.HIGH)       
+            GPIO.output(motor_in2, GPIO.LOW)
+            josh_function()
+        elif state == "c":
+            GPIO.output(motor_in1, GPIO.LOW)       
+            GPIO.output(motor_in2, GPIO.HIGH)
             josh_function()
 
     GPIO.cleanup()
