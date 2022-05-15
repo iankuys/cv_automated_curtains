@@ -84,7 +84,7 @@ while True: # While both limit switches are not pressed
 
     start_time = time.time()
     x = input('brandons input: ')
-    while time.times() - start_time < 1:
+    while time.time() - start_time < 1:
         print(f'changed state to {x}')
 
     x = x
