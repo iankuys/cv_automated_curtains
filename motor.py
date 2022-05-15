@@ -1,4 +1,3 @@
-from sre_parse import State
 import RPi.GPIO as GPIO
 from time import sleep
 
