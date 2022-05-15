@@ -1,3 +1,4 @@
+from sre_parse import State
 import RPi.GPIO as GPIO
 from time import sleep
 
@@ -69,6 +70,7 @@ gpio.cleanup()
 #     else:
 #         print("false2")
 
+
 print("first switch: ")
 print(GPIO.input(lswitch_gpio27))
 print("second switch: ")
@@ -79,18 +81,19 @@ while True: # While both limit switches are not pressed
     print(GPIO.input(lswitch_gpio27))
     print("second switch: ")
     print(GPIO.input(lswitch_gpio22))
-    if (not GPIO.input(lswitch_gpio27) or not GPIO.input(lswitch_gpio22)):
-        break
+
     x=input('Enter "o" for open and "c" for close: ')    # asks for input and stores into x 
-    
-    if (x == "o"):      # if open
+    if not GPIO.input(lswitch_gpio27) or not GPIO.input(lswitch_gpio22):
+        GPIO.output(motor_in1, GPIO.LOW)        # turns off motor opening
+        GPIO.output(motor_in2, GPIO.LOW)
+    elif (x == "o"):      # if open
         GPIO.output(motor_in1, GPIO.HIGH)       # turns on motor opening
         GPIO.output(motor_in2, GPIO.LOW)        # turns off motor closing
-        print("opening...")
+        print("opening curtain...")
     else:               # if close
         GPIO.output(motor_in1, GPIO.LOW)        # turns off motor opening
         GPIO.output(motor_in2, GPIO.HIGH)       # turns on motor closing
-        print("closing...")
+        print("closing curtain...")
 
     print("starting motor")
 
