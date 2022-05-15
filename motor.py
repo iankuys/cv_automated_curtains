@@ -86,6 +86,7 @@ while True: # While both limit switches are not pressed
     x = input('brandons input: ')
     while time.time() - start_time < 1:
         print(f'changed state to {x}')
+        start_time = time.time()
 
     x = x
     # x=input('Enter "o" for open and "c" for close: ')    # asks for input and stores into x 
