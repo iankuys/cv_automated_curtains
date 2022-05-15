@@ -15,7 +15,7 @@ lswitch_gpio27 = 27
 lswitch_gpio22 = 22
 # driver_gpio23 = 16
 # driver_gpio24 = 18
-# voltage5 = 2
+voltage5 = 2
 
 # Motor Setup
 GPIO.setmode(GPIO.BCM)
