@@ -6,11 +6,10 @@ import mediapipe as mp
 import keyboard
 import results
 from timer import *
-import RPi.GPIO as GPIO
+import RPi.GPIO as GPIO #ONLY WORKS IN RPI
 import datetime
 from time import sleep
-import schedule
-from crontab import CronTab
+from crontab import CronTab #FOR CRON ONLY WORKS IN RPI
 
 mp_drawing = mp.solutions.drawing_utils
 mp_hands = mp.solutions.hands
@@ -34,6 +33,8 @@ cap = cv2.VideoCapture(-1)
 #     if x == str(closeTimer()):
 #         return True
 #     return False
+
+#to define finger position as well as setting up for hand gestures
 def fingerPosition(image, handNo=0) -> list:
     lmList = []
     with handsModule.Hands(static_image_mode=False, min_detection_confidence=0.7, min_tracking_confidence=0.7, max_num_hands=2) as hands:
@@ -48,17 +49,16 @@ def fingerPosition(image, handNo=0) -> list:
                 lmList.append([id, cx, cy])
     return lmList
 
+#to configure Crontab in Pi OS
 def cronConfig(x,y):
     cron = CronTab(user='pi')
-    cron.new(command='python3 motor.py', comment='turn on motor.py')
+    job = cron.new(command='python3 motor.py', comment='turn on motor.py')
     job.setall(x, y, None, None, None)
     cron.write()
 
-def job():
-    print("it is time!")
-    isTime = False
-
 class ChiCurtain:
+
+    #initialization of Pi IO ports
     def __init__(self):
         isMoving = False
         self.ground = 6
@@ -92,40 +92,44 @@ class ChiCurtain:
         GPIO.output(self.motor_in2, GPIO.LOW)
         print("Stop")
 
+#route for homepage
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    print("hi")
     return render_template('index.html')
 
+#route to set open Timer
 @app.route('/openTimer', methods=['GET', 'POST'])
 def openTimer():
     data = request.form['appt']
     data_split = data.split(':')
-    return redirect(url_for('timerCheck', x=data_split[0], y=data_split[1])) #testing something
+    return redirect(url_for('timerCheck', x=data_split[0], y=data_split[1])) #redirects to route /timerCheck/x/y
 
+#route to set Close timer
 @app.route('/closeTimer', methods=['GET', 'POST'])
 def closeTimer():
     data = request.form['appt2']
-    return (data)
+    data_split = data.split(':')
+    return redirect(url_for('timerCheck', x=data_split[0], y=data_split[1])) #redirects to route /timerCheck/x/y
 
+#route to set timer to Raspberry Pi
 @app.route('/timerCheck/<x>/<y>')
-def timerCheck(x):
-
-
-
+def timerCheck(x,y):
+    cronConfig(x,y)
     return("success")
-    
 
+#route for open button   
 @app.route('/open', methods=['GET', 'POST'])
 def home():
     print("hello from open")
     return ("hi")
 
+#route for close button
 @app.route('/close', methods=['GET', 'POST'])
 def close_manual():
     print("hello from close")
     return ("hi")
 
+#route for video capturing and hand gestures
 @app.route('/capture', methods=['GET', 'POST'])
 def capture():     
     state = ""
