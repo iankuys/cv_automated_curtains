@@ -94,7 +94,7 @@ print(GPIO.input(lswitch_gpio22))
 
 #     print("starting motor")
 
-while not (GPIO.input(lswitch_gpio27) or GPIO.input(lswitch_gpio22)): # While both limit switches are not pressed
+while (GPIO.input(lswitch_gpio27) or GPIO.input(lswitch_gpio22)): # While both limit switches are not pressed
 
     x=input('Enter "o" for open and "c" for close: ')    # asks for input and stores into x 
     print("first switch: ")
