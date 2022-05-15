@@ -58,20 +58,30 @@ while seconds > 0:
 
 gpio.cleanup()
 """
+
+if GPIO.input(lswitch_gpio27):
+    print("true1")
+else:
+    print("false1")
+if GPIO.input(lswitch_gpio22):
+    print("true2")
+else:
+    print("false2")
+
 print("first switch: ")
 print(GPIO.input(lswitch_gpio27))
 print("second switch: ")
 print(GPIO.input(lswitch_gpio22))
 
 while True: # While both limit switches are not pressed
-    x=input('Enter "o" for open and "c" for close: ')    # asks for input and stores into x 
-    if (GPIO.input(lswitch_gpio27) or GPIO.input(lswitch_gpio22)):
-        break
-
     print("first switch: ")
     print(GPIO.input(lswitch_gpio27))
     print("second switch: ")
     print(GPIO.input(lswitch_gpio22))
+
+    x=input('Enter "o" for open and "c" for close: ')    # asks for input and stores into x 
+    if (GPIO.input(lswitch_gpio27) or GPIO.input(lswitch_gpio22)):
+        break
     if (x == "o"):      # if open
         GPIO.output(motor_in1, GPIO.HIGH)       # turns on motor opening
         GPIO.output(motor_in2, GPIO.LOW)        # turns off motor closing
