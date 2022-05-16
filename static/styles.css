@@ -18,7 +18,7 @@
 
 button{
     display: inline-block;
-    background-color: #7b38d8;
+    background-color:  #3f3f91;
     border-radius: 10px;
     border: 3px double #ffffff;
     color: #ffffff;
@@ -34,7 +34,7 @@ button{
 }
 
 input[type=submit]{
-    background: #7b38d8;
+    background: #3f3f91;
     color:#ffffff;
     border: 3px double #ffffff;
 }
@@ -45,7 +45,7 @@ html, body {
 }
 
 body {
-    background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+    background: linear-gradient(-45deg, #f6E8B1, #FED8B1, #f5f5dc, #c3b091);
     background-size: 400% 400%;
     animation: gradient 15s ease infinite;
 }
@@ -65,7 +65,7 @@ body {
 h3 {
 text-decoration: underline;
 border: 3px double #000000;
-background: #7b38d8;
+background: #c6e2ff;
 max-width: 200px;
 margin: 20px auto;
 padding: 10px;
@@ -76,7 +76,7 @@ font-size: 25px;
 h2{
     text-decoration: underline;
     border: 3px double #000000;
-    background: #7b38d8;
+    background: #c6e2ff;
     max-width: 300px;
     margin: 20px auto;
     padding: 10px;
