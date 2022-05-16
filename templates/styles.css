@@ -18,7 +18,7 @@
 
 button{
     display: inline-block;
-    background-color: #7b38d8;
+    background-color:  #3f3f91;
     border-radius: 10px;
     border: 3px double #ffffff;
     color: #ffffff;
@@ -26,21 +26,18 @@ button{
     font-size: 22px;
 
     height: 50px;
-    -webkit-transition: all 0.5s;
-    -moz-transition: all 0.5s;
-    -o-transition: all 0.5s;
-    transition: all 0.5s;
-    cursor: pointer;
-    margin: 5px;
 }
-
 
 .button-txt{
     font-size: 15pt;
     font-weight:500;
 }
 
-
+input[type=submit]{
+    background: #3f3f91;
+    color:#ffffff;
+    border: 3px double #ffffff;
+}
 
 html, body {
     width: 100%;
@@ -48,7 +45,7 @@ html, body {
 }
 
 body {
-    background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+    background: linear-gradient(-45deg, #f6E8B1, #fcdfc1, #f5f5dc, #c3b091);
     background-size: 400% 400%;
     animation: gradient 15s ease infinite;
 }
@@ -65,13 +62,25 @@ body {
     }
 }
 
-h3{
+h3 {
 text-decoration: underline;
 border: 3px double #000000;
-background: #7b38d8;
+background: #c6e2ff;
 max-width: 200px;
 margin: 20px auto;
 padding: 10px;
 color:#000000;
 font-size: 25px;
+}
+
+h2{
+    text-decoration: underline;
+    border: 3px double #000000;
+    background: #c6e2ff;
+    max-width: 300px;
+    margin: 20px auto;
+    padding: 10px;
+    color:#000000;
+    font-size: 25px;
+
 }
