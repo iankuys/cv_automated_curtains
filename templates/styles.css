@@ -34,6 +34,7 @@ button{
     margin: 5px;
 }
 
+
 .button-txt{
     font-size: 15pt;
     font-weight:500;
@@ -64,7 +65,7 @@ body {
     }
 }
 
-h3 {
+h3{
 text-decoration: underline;
 border: 3px double #000000;
 background: #7b38d8;
