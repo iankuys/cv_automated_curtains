@@ -8,6 +8,8 @@
 
 #### [RUN](#run)
 
+#### [ENDPOINTS](#endpoints)
+
 ### INTRODUCTION
 MAKE SURE THAT PYTHON IS INSTALLED ON YOUR COMPUTER
 https://www.python.org/downloads/
@@ -47,8 +49,19 @@ python main.py
 Use the local server to open the web app. It should be in an IP form address.
 
 
-### NOTES
+### ENPOINTS
+```
+"GET / HTTP/1.1" 200
+"GET /static/styles.css HTTP/1.1" 304
+"GET /static/curtain.png HTTP/1.1" 304
+"POST /openTimer HTTP/1.1" 302
+"GET /timerCheck/18/04 HTTP/1.1" 500
+```
 
+Status: 
+| Status | 200 | 304 | 302 | 500 |
+| :---: | :---: | :---: | :---: | :---: |
+|  | meaning | meaning | meaning | meaning |
 
 ### AUTHORS AND ACKNOWLEDGEMENTS
 
