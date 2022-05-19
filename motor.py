@@ -1,5 +1,5 @@
 import RPi.GPIO as GPIO
-from time import sleep
+import time
 
 # must instsall RPi.GPIO see README.md under to set up
 
@@ -11,8 +11,8 @@ ground = 6
 motor_in1 = 23
 motor_in2 = 24
 motor_enA = 25
-lswitch_gpio27 = 27
-lswitch_gpio22 = 22
+lswitch = 22
+rswitch = 27
 voltage5 = 2
 
 # Motor Setup
@@ -23,18 +23,18 @@ GPIO.setup(motor_enA, GPIO.OUT)
 GPIO.output(motor_in1, GPIO.LOW)
 GPIO.output(motor_in2, GPIO.LOW)
 
-pwr =GPIO.PWM(motor_enA, 1000)
+pwr = GPIO.PWM(motor_enA, 1000)
 pwr.start(25)
 
 # Limit Switch Setup
-GPIO.setup(lswitch_gpio27, GPIO.IN) # in or out
-GPIO.setup(lswitch_gpio22, GPIO.IN) # in or out
+GPIO.setup(rswitch, GPIO.IN)
+GPIO.setup(lswitch, GPIO.IN)
 GPIO.setup(voltage5, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
 # Working Motor and Limit Switches
-def josh_function():
-    print("switch 1 state:", lswitch1_pressed)
-    print("switch 2 state:", lswitch2_pressed)
+def move_motor(state):
+    print("left switch state:", lswitch_pressed)
+    print("right switch state:", rswitch_pressed)
 
     while True:
         if state == "o":
@@ -45,29 +45,24 @@ def josh_function():
             GPIO.output(motor_in1, GPIO.LOW)       
             GPIO.output(motor_in2, GPIO.HIGH)
             print("closing curtain...")
-        if lswitch1_pressed or not lswitch2_pressed:
-            GPIO.output(motor_in1, GPIO.LOW)       
+        time.sleep(0.3) # Allows curtain to move even when limit switch starts pressed
+        if lswitch_pressed or not rswitch_pressed:
+            GPIO.output(motor_in1, GPIO.LOW)
             GPIO.output(motor_in2, GPIO.LOW)
             break
 
-
-
 if __name__ == "__main__":
-    lswitch1_pressed = not(GPIO.input(lswitch_gpio27))
-    lswitch2_pressed = not(GPIO.input(lswitch_gpio22))
+    lswitch_pressed = not(GPIO.input(lswitch))
+    rswitch_pressed = not(GPIO.input(rswitch))
     while True:
-        state = input('Enter "o" for open and "c" for close: ') 
-        # if (state == "c") and (lswitch1_pressed): # Curtain open switch is 
-        #     pass
-        # elif (state == "o") and (lswitch2_pressed):
-        #     pass
-        # elif (state == "o"):
-        #     GPIO.output(motor_in1, GPIO.HIGH)       
-        #     GPIO.output(motor_in2, GPIO.LOW)
-        #     josh_function(state)
-        # elif (state == "c"):
-        #     GPIO.output(motor_in1, GPIO.LOW)       
-        #     GPIO.output(motor_in2, GPIO.HIGH)
-        josh_function()
+        state = input('Enter "o" for open and "c" for close: ')
+        if !lswitch_pressed and !rswitch_pressed:
+            move_motor(state)
+        elif (state == "c") and (rswitch_pressed):
+            move_motor(state)
+        elif (state == "o") and (lswitch_pressed):
+            move_motor(state)
+        else:
+            pass # Cannot further open curtain if fully open or close if fully closed
 
     GPIO.cleanup()
