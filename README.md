@@ -1,6 +1,12 @@
 # Xclass-Project
 
+# TABLE OF CONTENTS
 
+#### [INTRODUCTION](#introduction)
+
+#### [INSTALLATION](#installation)
+
+#### [RUN](#run)
 
 ### INTRODUCTION
 MAKE SURE THAT PYTHON IS INSTALLED ON YOUR COMPUTER
