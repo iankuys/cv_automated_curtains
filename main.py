@@ -6,7 +6,7 @@ import mediapipe as mp
 import keyboard
 import results
 from timer import *
-import RPi.GPIO as GPIO #ONLY WORKS IN RPI
+# import RPi.GPIO as GPIO #ONLY WORKS IN RPI
 import datetime
 from time import sleep
 from crontab import CronTab #FOR CRON ONLY WORKS IN RPI
@@ -54,7 +54,7 @@ def cronConfig(x,y):
     cron = CronTab(user='pi')
     job = cron.new(command='python3 motor.py', comment='turn on motor.py')
     job.setall(x, y, None, None, None)
-    cron.write()
+    cron.write(job)
 
 class ChiCurtain:
 
@@ -92,6 +92,9 @@ class ChiCurtain:
         GPIO.output(self.motor_in2, GPIO.LOW)
         print("Stop")
 
+
+chiCurtain = ChiCurtain()
+
 #route for homepage
 @app.route('/', methods=['GET', 'POST'])
 def index():
@@ -121,12 +124,14 @@ def timerCheck(x,y):
 @app.route('/open', methods=['GET', 'POST'])
 def home():
     print("hello from open")
+    chiCurtain.openCurtain()
     return ("hi")
 
 #route for close button
 @app.route('/close', methods=['GET', 'POST'])
 def close_manual():
     print("hello from close")
+    chiCurtain.closeCurtain()
     return ("hi")
 
 #route for video capturing and hand gestures
@@ -194,15 +199,16 @@ def capture():
                 if totalFingers == 5:
                     state = "Play"
                     print("OPENING CURTAIN")
+                    chiCurtain.openCurtain()
                     #break
                 # fingers.append(1)
                 if totalFingers == 0 and state == "Play":
                     state = "Pause"
                     print("CLOSING CURTAIN")
+                    chiCurtain.closeCurtain()
                     #break     
                            
     return ("hi")
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=80, debug=True)
-
