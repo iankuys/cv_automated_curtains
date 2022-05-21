@@ -23,7 +23,7 @@ tipIds = [4, 8, 12, 16, 20]     # tip of all fingers from thumb to pinky
 state = None
 Gesture = None
 wCam, hCam = 720, 640           # dimensions of camera
-cap = cv2.VideoCapture(-1)
+cap = cv2.VideoCapture(0)
 
 # def check_schedule_time_with_realtime() -> bool:
 #     x = str(getTime())
