@@ -1,12 +1,9 @@
 from xml.etree.ElementTree import Comment
 from flask import Flask, render_template, request, url_for, redirect
-import cv2 as cv2
-from pylab import *
+import cv2
 import mediapipe as mp
-import keyboard
-import results
-from timer import *
-# import RPi.GPIO as GPIO #ONLY WORKS IN RPI
+# import results
+import RPi.GPIO as GPIO #ONLY WORKS IN RPI
 import datetime
 from time import sleep
 from crontab import CronTab #FOR CRON ONLY WORKS IN RPI
@@ -25,14 +22,6 @@ Gesture = None
 wCam, hCam = 720, 640           # dimensions of camera
 cap = cv2.VideoCapture(0)
 
-# def check_schedule_time_with_realtime() -> bool:
-#     x = str(getTime())
-#     print(x)
-#     if x == str(openTimer()):
-#         return True
-#     if x == str(closeTimer()):
-#         return True
-#     return False
 
 #to define finger position as well as setting up for hand gestures
 def fingerPosition(image, handNo=0) -> list:
@@ -52,14 +41,13 @@ def fingerPosition(image, handNo=0) -> list:
 #to configure Crontab in Pi OS
 def cronConfig(x,y):
     cron = CronTab(user='pi')
-    job = cron.new(command='python3 motor.py', comment='turn on motor.py')
+    job = cron.new(command='python3 motor.py', comment='turn on motor.py')  
     job.setall(x, y, None, None, None)
     cron.write(job)
 
 class ChiCurtain:
 
-    #initialization of Pi IO ports
-    def __init__(self):
+    def __init__(self):             #initialization of Pi IO ports
         isMoving = False
         self.ground = 6
         self.motor_in1 = 23
@@ -92,8 +80,7 @@ class ChiCurtain:
         GPIO.output(self.motor_in2, GPIO.LOW)
         print("Stop")
 
-
-chiCurtain = ChiCurtain()
+# chiCurtain = ChiCurtain()         # uncomment if doesn't work and delete first line in main fucntion
 
 #route for homepage
 @app.route('/', methods=['GET', 'POST'])
@@ -170,13 +157,8 @@ def capture():
                     image, hand_landmarks, mp_hands.HAND_CONNECTIONS)
                     drawingModule.draw_landmarks(frame, hand_landmarks, handsModule.HAND_CONNECTIONS)
             cv2.imshow('Test hand', frame)
-            '''
-            if cv2.waitKey(1) == 27:                # supposed to stop when ESC is pressed but doesn't work
-                print("ESC key pressed exiting")    # prob will delete this if statement
-                break
-            '''
+
             lmList = fingerPosition(image)
-            #print(lmList)
             if len(lmList) != 0:
                 fingers = []                        # num of fingers up
 
@@ -195,20 +177,17 @@ def capture():
 
                 totalFingers = fingers.count(1)
                 print(totalFingers)
-                #print(lmList[9][2])
                 if totalFingers == 5:
                     state = "Play"
                     print("OPENING CURTAIN")
                     chiCurtain.openCurtain()
-                    #break
-                # fingers.append(1)
                 if totalFingers == 0 and state == "Play":
                     state = "Pause"
                     print("CLOSING CURTAIN")
-                    chiCurtain.closeCurtain()
-                    #break     
+                    chiCurtain.closeCurtain() 
                            
     return ("hi")
 
 if __name__ == "__main__":
+    chiCurtain = ChiCurtain()
     app.run(host='0.0.0.0', port=80, debug=True)
