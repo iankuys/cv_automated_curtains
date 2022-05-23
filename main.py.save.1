@@ -39,12 +39,9 @@ def fingerPosition(image, handNo=0) -> list:
     return lmList
 
 #to configure Crontab in Pi OS
-def cronConfig(x,y,z):
+def cronConfig(x,y):
     cron = CronTab(user='pi')
-    if (z=='open'):
-    	job = cron.new(command='python /home/pi/local/Xclass-Project/open.py', comment='turn on motor.py')
-    else:
-    	job = cron.new(command='python /home/pi/local/Xclass-Project/close.py', comment='turn on motor.py')
+    job = cron.new(command='python /home/pi/local/Xclass-Project/close.py', comment='turn on motor.py')
     job.setall(y, x, None, None, None)
     print(job)
     cron.write_to_user(user=True)
@@ -138,19 +135,19 @@ def index():
 def openTimer():
     data = request.form['appt']
     data_split = data.split(':')
-    return redirect(url_for('timerCheck', x=data_split[0], y=data_split[1], z='open')) #redirects to route /timerCheck/x/y
+    return redirect(url_for('timerCheck', x=data_split[0], y=data_split[1])) #redirects to route /timerCheck/x/y
 
 #route to set Close timer
 @app.route('/closeTimer', methods=['GET', 'POST'])
 def closeTimer():
     data = request.form['appt2']
     data_split = data.split(':')
-    return redirect(url_for('timerCheck', x=data_split[0], y=data_split[1], z='close')) #redirects to route /timerCheck/x/y
+    return redirect(url_for('timerCheck', x=data_split[0], y=data_split[1])) #redirects to route /timerCheck/x/y
 
 #route to set timer to Raspberry Pi
-@app.route('/timerCheck/<x>/<y>/<z>')
-def timerCheck(x,y,z):
-    cronConfig(x,y,z)
+@app.route('/timerCheck/<x>/<y>')
+def timerCheck(x,y):
+    cronConfig(x,y)
     return("success")
 
 #route for open button   
