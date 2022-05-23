@@ -73,14 +73,13 @@ class ChiCurtain:
         GPIO.setup(self.voltage5, GPIO.IN, pull_up_down=GPIO.PUD_UP)
         print(self.ground, self.motor_in1, self.motor_in2, self.motor_enA)
 
-        lswitch_pressed = not(GPIO.input(self.lswitch))
-        rswitch_pressed = not(GPIO.input(self.rswitch))
-        while (lswitch_pressed or (not lswitch_pressed and not rswitch_pressed)):
-	        lswitch_pressed = not(GPIO.input(self.lswitch))
-	        rswitch_pressed = not(GPIO.input(self.rswitch))
-	        GPIO.output(self.motor_in1, GPIO.LOW)
+	lswitch_pressed = not(GPIO.input(self.lswitch))
+	rswitch_pressed = not(GPIO.input(self.rswitch))
+        while (lswitch_pressed) or (!lswitch_pressed and !rswitch_pressed):
+	        
+GPIO.output(self.motor_in1, GPIO.LOW)
 	        GPIO.output(self.motor_in2, GPIO.HIGH)
-	        print("Starting...")
+	        print("Opening curtain...")
 
     def closeCurtain(self):
 
@@ -96,14 +95,13 @@ class ChiCurtain:
         GPIO.setup(self.lswitch, GPIO.IN)
         GPIO.setup(self.voltage5, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
-        lswitch_pressed = not(GPIO.input(self.lswitch))
-        rswitch_pressed = not(GPIO.input(self.rswitch))
-        while (rswitch_pressed or (not lswitch_pressed and not rswitch_pressed)):
-	        lswitch_pressed = not(GPIO.input(self.lswitch))
-	        rswitch_pressed = not(GPIO.input(self.rswitch))
-	        GPIO.output(self.motor_in1, GPIO.HIGH)
-	        GPIO.output(self.motor_in2, GPIO.LOW)
-	        print("Reversing...")
+	lswitch_pressed = not(GPIO.input(self.lswitch))
+	rswitch_pressed = not(GPIO.input(self.rswitch))
+	while（rswitch_pressed) or (!lswitch_pressed and !rswitch_pressed):
+        	GPIO.output(self.motor_in1, GPIO.HIGH)
+        	GPIO.output(self.motor_in2, GPIO.LOW)
+        	print("Closing curtain...")
+	
 
     def stopCurtain(self):
 
