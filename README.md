@@ -60,17 +60,17 @@ This module contains functions and a class that controls the Caring Curtain's mo
 ```fingerPosition(image, handNo=0)```
 Defines finger position as well as setting up for hand gestures.
 
-Parameters:
+>Parameters:
 image: static picture passed with camera
 handNo: int, idk
 
-Returns:
+>Returns:
 List with finger position; each item is a 3-tuple withan id and the x and y coordinates
 
 ```cronConfig(x,y)```
 Configures CronTab in Pi OS.
 
-Parameters:
+>Parameters:
 x: hours
 y: minutes
 
@@ -86,13 +86,13 @@ Stops curtain.
 ```index()```
 Generates output from a template file(index.html) for root URL.
 
-Returns:
+>Returns:
 render_template function from the flask.templating package that renders template file
 
 ```openTimer()```
 Gets data from time form for advanced scheduling.
 
-Returns:
+>Returns:
 URL redirect to a page with time shown.
 
 ```closeTimer()```
@@ -213,7 +213,7 @@ Status: 200 OK
 }
 ```
 
-# should we keep
+# keep?
 ```
 "GET / HTTP/1.1" 200
 "GET /static/styles.css HTTP/1.1" 304
