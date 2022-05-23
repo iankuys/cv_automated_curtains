@@ -8,7 +8,7 @@
 
 #### [RUN](#run)
 
-#### [FUNCTION DOCUMENTATION](#functiondocumentation)
+#### [FUNCTION DOCUMENTATION](#documentation)
 
 #### [ENDPOINTS](#endpoints)
 
@@ -52,7 +52,7 @@ python main.py
 
 Use the local server to open the web app. It should be in an IP form address.
 
-## FUNCTION DOCUMENTATION
+## DOCUMENTATION
 
 ### main.py
 This module contains functions and a class that controls the Caring Curtain's movement and gesture control component.
