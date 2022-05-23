@@ -19,7 +19,7 @@ isTime = True
 tipIds = [4, 8, 12, 16, 20]     # tip of all fingers from thumb to pinky
 state = None
 Gesture = None
-wCam, hCam = 720, 640           # dimensions of camera
+wCam, hCam = 640, 480          # dimensions of camera
 
 #to define finger position as well as setting up for hand gestures
 def fingerPosition(image, cap, handNo=0) -> list:
@@ -176,12 +176,12 @@ def capture():
     with mp_hands.Hands(
         min_detection_confidence=0.8,
         min_tracking_confidence=0.5) as hands:
-        while cap.isOpened():           # all occurs when the capture button is pressed for now
-            ret, frame = cap.read()     # taking many static picture with camera each time 
-                                        # iterated through with while loop
-
-            results = hands.process(cv2.cvtColor(frame, cv2.COLOR_BGR2RGB))     # converting BGR to RBG
+        while cap.isOpened():           # all occurs when the capture button is pressed for now    # taking many static picture with camera each time 
+            
+            ret,frame = cap.read() 
+                                                   # iterated through with while l
             success, image = cap.read()
+            cv2.waitKey(1)
             if not success:
                 print("Ignoring empty camera frame.")
             # If loading a video, use 'break' instead of 'continue'.
