@@ -8,9 +8,13 @@
 
 #### [RUN](#run)
 
+#### [FUNCTION DOCUMENTATION](#functiondocumentation)
+
 #### [ENDPOINTS](#endpoints)
 
-### INTRODUCTION
+
+## INTRODUCTION
+
 MAKE SURE THAT PYTHON IS INSTALLED ON YOUR COMPUTER
 https://www.python.org/downloads/
 
@@ -18,8 +22,7 @@ Project X backend and webapp
 main.py used to host web application from Raspberry Pi
 
 
-
-### INSTALLATION
+## INSTALLATION
 
 Our program uses a number of different imports. In order for this code to compile, make sure to install all required modules prior to running. Copy and paste each line into the terminal.
 
@@ -27,8 +30,6 @@ Our program uses a number of different imports. In order for this code to compil
 ```pip install flask```
 ```pip install opencv-python```
 ```pip install mediapipe```
-```pip install keyboard```
-```pip install results```
 ```pip install RPi.GPIO```
 ```pip install python-crontab``` 
 
@@ -36,7 +37,10 @@ IF ```pip``` doesn't work try using ```pip3``` instead
 
 IF encountering permission related or errors add ```--user``` in the commands above, this helps us run commands as administrator.
 
-### RUN
+
+
+
+## RUN
 
 Make sure you are running this code on Raspberry Pi. Imports such as RPi.GPIO and crontab will only work on Raspberry Pi.
 
@@ -48,8 +52,168 @@ python main.py
 
 Use the local server to open the web app. It should be in an IP form address.
 
+## FUNCTION DOCUMENTATION
 
-### ENPOINTS
+### main.py
+This module contains functions and a class that controls the Caring Curtain's movement and gesture control component.
+
+```fingerPosition(image, handNo=0)```
+Defines finger position as well as setting up for hand gestures.
+
+Parameters:
+image: static picture passed with camera
+handNo: int, idk
+
+Returns:
+List with finger position; each item is a 3-tuple withan id and the x and y coordinates
+
+```cronConfig(x,y)```
+Configures CronTab in Pi OS.
+
+Parameters:
+x: hours
+y: minutes
+
+```ChiCurtain.openCurtain()```
+Opens curtain.
+
+```ChiCurtain.closeCurtain()```
+Closes curtain.
+
+```ChiCurtain.stopCurtain()```
+Stops curtain.
+
+```index()```
+Generates output from a template file(index.html) for root URL.
+
+Returns:
+render_template function from the flask.templating package that renders template file
+
+```openTimer()```
+Gets data from time form for advanced scheduling.
+
+Returns:
+URL redirect to a page with time shown.
+
+```closeTimer()```
+
+```timerCheck(x,y)```
+
+```home()```
+
+```close_manual()```
+
+```capture()```
+
+
+
+# ENDPOINTS
+
+## Open Timer
+This endpoint sends user-inputted data to add/update the scheduled time for opening the curtain.
+
+### Path
+
+```http 
+POST /openTimer
+```
+
+### Response
+```
+HTTP/1.1 201 Created
+Status: 201 Created
+
+{
+    name: 'client'
+    time: '00:00'
+}
+```
+Note: time is in military time and varies based on user input
+
+## Close Timer
+This endpoint sends user-inputted data to add/update the scheduled time for closing the curtain.
+
+### Path
+
+```http 
+POST /closeTimer
+```
+
+### Response
+```
+HTTP/1.1 201 Created
+Status: 201 Created
+
+{
+    name: 'client'
+    time: '00:00'
+}
+```
+
+Note: time is in military time and varies based on user input
+
+## Timer Check
+This endpoint accepts time as a path parameter.
+
+### Path
+
+```http 
+GET /timerCheck/<x>/<y>
+```
+
+### Response
+```
+HTTP/1.1 200 OK
+Status: 200 OK
+
+{
+    name: 'client'
+    x: <x>
+    y: <y>
+}
+```
+
+## Open
+This endpoint sets time to *now* to open curtain manually.
+
+### Path
+
+```http 
+POST /open
+```
+
+### Response
+```
+HTTP/1.1 200 OK
+Status: 200 OK
+
+{
+    name: 'client'
+    time: 'now'
+}
+```
+
+## Close
+This endpoint sets time to *now* to close curtain manually.
+
+### Path
+
+```http 
+POST /close
+```
+
+### Response
+```
+HTTP/1.1 200 OK
+Status: 200 OK
+
+{
+    name: 'client'
+    time: 'now'
+}
+```
+
+# should we keep
 ```
 "GET / HTTP/1.1" 200
 "GET /static/styles.css HTTP/1.1" 304
@@ -61,7 +225,7 @@ Use the local server to open the web app. It should be in an IP form address.
 Status: 
 | Status | 200 | 304 | 302 | 500 |
 | :---: | :---: | :---: | :---: | :---: |
-|  | meaning | meaning | meaning | meaning |
+|  | the request has succeeded | the requested resource has not been modified since the last access | the requested resource has been temporarily moved to a different location | the request has not been fulfilled due to an unexpected error on the server |
 
 ### AUTHORS AND ACKNOWLEDGEMENTS
 
