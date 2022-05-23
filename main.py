@@ -20,11 +20,9 @@ tipIds = [4, 8, 12, 16, 20]     # tip of all fingers from thumb to pinky
 state = None
 Gesture = None
 wCam, hCam = 720, 640           # dimensions of camera
-cap = cv2.VideoCapture(0)
-
 
 #to define finger position as well as setting up for hand gestures
-def fingerPosition(image, handNo=0) -> list:
+def fingerPosition(image, cap, handNo=0) -> list:
     lmList = []
     with handsModule.Hands(static_image_mode=False, min_detection_confidence=0.7, min_tracking_confidence=0.7, max_num_hands=2) as hands:
         ret, frame = cap.read()
@@ -170,6 +168,7 @@ def close_manual():
 #route for video capturing and hand gestures
 @app.route('/capture', methods=['GET', 'POST'])
 def capture():     
+    cap = cv2.VideoCapture(0)
     print("Capture says hi")
     state = ""
     cap.set(3, wCam)
@@ -204,7 +203,7 @@ def capture():
                     drawingModule.draw_landmarks(frame, hand_landmarks, handsModule.HAND_CONNECTIONS)
             cv2.imshow('Test hand', frame)
 
-            lmList = fingerPosition(image)
+            lmList = fingerPosition(image, cap)
             if len(lmList) != 0:
                 fingers = []                        # num of fingers up
 
