@@ -72,10 +72,11 @@ Defines finger position as well as setting up for hand gestures.
 >**Parameters:**
 image: static picture passed with camera
 handNo: int
-**Returns:**
+
+>**Returns:**
 List with finger position; each item is a 3-tuple withan id and the x and y coordinates
 
-```cronConfig(x,y, z)```
+```cronConfig(x,y,z)```
 Configures CronTab in Pi OS. Depending on the z parameter, this function will set a command regarding opening or closing the curtain.
 
 >**Parameters:**
@@ -102,13 +103,13 @@ render_template function from the flask.templating package that renders template
 Gets data from time form for advanced scheduling.
 
 >**Returns:**
-Redirects to a /timerCheck/<x>/<y>/<z> with data from form, with 'open' as the z parameter.
+Redirects to a /timerCheck/x/y/z with data from form, with 'open' as the z parameter.
 
 ```closeTimer()```
 Gets data from time form for advanced scheduling.
 
 >**Returns:**
-Redirects to a /timerCheck/<x>/<y>/<z> with data from form, with 'close' as the z parameter.
+Redirects to a /timerCheck/x/y/z with data from form, with 'close' as the z parameter.
 
 ```timerCheck(x,y,z)```
     Calls cronConfig(x,y,z) to create a             scheduled job.
@@ -116,7 +117,8 @@ Redirects to a /timerCheck/<x>/<y>/<z> with data from form, with 'close' as the 
     x: hours
     y: minutes
     z: action ('open' or 'close')
-**Returns:**
+    
+>**Returns:**
     'success' - used for testing purposes
 
 
