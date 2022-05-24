@@ -2,7 +2,6 @@ from xml.etree.ElementTree import Comment
 from flask import Flask, render_template, request, url_for, redirect
 import cv2 as cv2
 import mediapipe as mp
-# import results
 import RPi.GPIO as GPIO #ONLY WORKS IN RPI
 import datetime
 from time import sleep
