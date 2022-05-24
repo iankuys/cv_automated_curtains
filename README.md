@@ -21,6 +21,15 @@ https://www.python.org/downloads/
 Project X backend and webapp
 main.py used to host web application from Raspberry Pi
 
+### Coding Guidelines
+| Language   | Guideline | Tools |
+|------------|-----------|-------|
+| Python     |[Python Guideline](https://peps.python.org/pep-0008/)           | [Flask](https://flask.palletsprojects.com/en/2.1.x/ )     |
+| JavaScript |[JavaScript Guideline](https://developer.mozilla.org/en-US/docs/MDN/Guidelines/Code_guidelines/JavaScript#general_javascript_guidelines)|       |
+| CSS        |[CSS Guideline](https://developer.mozilla.org/en-US/docs/MDN/Guidelines/Code_guidelines/CSS)      |       |
+| HTML       |[HTML Guideline](https://developer.mozilla.org/en-US/docs/MDN/Guidelines/Code_guidelines/HTML)      |       |
+
+
 
 ## INSTALLATION
 
@@ -60,19 +69,19 @@ This module contains functions and a class that controls the Caring Curtain's mo
 ```fingerPosition(image, handNo=0)```
 Defines finger position as well as setting up for hand gestures.
 
->Parameters:
+>**Parameters:**
 image: static picture passed with camera
-handNo: int, idk
-
->Returns:
+handNo: int
+**Returns:**
 List with finger position; each item is a 3-tuple withan id and the x and y coordinates
 
-```cronConfig(x,y)```
-Configures CronTab in Pi OS.
+```cronConfig(x,y, z)```
+Configures CronTab in Pi OS. Depending on the z parameter, this function will set a command regarding opening or closing the curtain.
 
->Parameters:
+>**Parameters:**
 x: hours
 y: minutes
+z: 'open' or 'close'
 
 ```ChiCurtain.openCurtain()```
 Opens curtain.
@@ -86,24 +95,43 @@ Stops curtain.
 ```index()```
 Generates output from a template file(index.html) for root URL.
 
->Returns:
+>**Returns:**
 render_template function from the flask.templating package that renders template file
 
 ```openTimer()```
 Gets data from time form for advanced scheduling.
 
->Returns:
-URL redirect to a page with time shown.
+>**Returns:**
+Redirects to a /timerCheck/<x>/<y>/<z> with data from form, with 'open' as the z parameter.
 
 ```closeTimer()```
+Gets data from time form for advanced scheduling.
 
-```timerCheck(x,y)```
+>**Returns:**
+Redirects to a /timerCheck/<x>/<y>/<z> with data from form, with 'close' as the z parameter.
+
+```timerCheck(x,y,z)```
+    Calls cronConfig(x,y,z) to create a             scheduled job.
+>**Parameters:**
+    x: hours
+    y: minutes
+    z: action ('open' or 'close')
+**Returns:**
+    'success' - used for testing purposes
+
 
 ```home()```
+    Opens our chiCurtain instance. Prints 'hello from open' for testing purposes.
+>**Returns:**
+'hi' - used for testing purposes
 
 ```close_manual()```
+    Closes our chiCurtain instance. Prints 'hello from close' for testing purposes.
+>**Returns:**
+'hi' - used for testing purposes
 
-```capture()```
+```capture_gesture()```
+    Captures gesture by using multiple static images. Adds amount of fingers held up based on data returned from fingerPosition(). According to amount of fingers, this function will open or close our chiCurtain instance.
 
 
 
@@ -158,7 +186,7 @@ This endpoint accepts time as a path parameter.
 ### Path
 
 ```http 
-GET /timerCheck/<x>/<y>
+GET /timerCheck/<x>/<y>/<z>
 ```
 
 ### Response
@@ -170,6 +198,7 @@ Status: 200 OK
     name: 'client'
     x: <x>
     y: <y>
+    z: <z>
 }
 ```
 
@@ -213,19 +242,6 @@ Status: 200 OK
 }
 ```
 
-# keep?
-```
-"GET / HTTP/1.1" 200
-"GET /static/styles.css HTTP/1.1" 304
-"GET /static/curtain.png HTTP/1.1" 304
-"POST /openTimer HTTP/1.1" 302
-"GET /timerCheck/18/04 HTTP/1.1" 500
-```
-
-Status: 
-| Status | 200 | 304 | 302 | 500 |
-| :---: | :---: | :---: | :---: | :---: |
-|  | the request has succeeded | the requested resource has not been modified since the last access | the requested resource has been temporarily moved to a different location | the request has not been fulfilled due to an unexpected error on the server |
 
 ### AUTHORS AND ACKNOWLEDGEMENTS
 
