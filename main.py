@@ -7,6 +7,7 @@ import RPi.GPIO as GPIO #ONLY WORKS IN RPI
 import datetime
 from time import sleep
 from crontab import CronTab #FOR CRON ONLY WORKS IN RPI
+import threading
 
 mp_drawing = mp.solutions.drawing_utils
 mp_hands = mp.solutions.hands
@@ -24,7 +25,7 @@ wCam, hCam = 640, 480          # dimensions of camera
 #to define finger position as well as setting up for hand gestures
 def fingerPosition(image, cap, handNo=0) -> list:
     lmList = []
-    with handsModule.Hands(static_image_mode=False, min_detection_confidence=0.7, min_tracking_confidence=0.7, max_num_hands=2) as hands:
+    with handsModule.Hands(static_image_mode=False, min_detection_confidence=0.7, min_tracking_confidence=0.7, max_num_hands=1) as hands:
         ret, frame = cap.read()
         results = hands.process(cv2.cvtColor(frame, cv2.COLOR_BGR2RGB))
         if results.multi_hand_landmarks:
@@ -165,9 +166,7 @@ def close_manual():
     chiCurtain.closeCurtain()
     return ("hi")
 
-#route for video capturing and hand gestures
-@app.route('/capture', methods=['GET', 'POST'])
-def capture():     
+def capture_gesture():
     cap = cv2.VideoCapture(0)
     print("Capture says hi")
     state = ""
@@ -230,8 +229,9 @@ def capture():
                     state = "Pause"
                     print("CLOSING CURTAIN")
                     chiCurtain.closeCurtain() 
-                           
-    return ("hi")
+
 
 if __name__ == "__main__":
+    capture_thread = threading.Thread(target=capture_gesture)
+    capture_thread.start()
     app.run(host='0.0.0.0', port=5000, debug=True)
