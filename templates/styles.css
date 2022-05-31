@@ -63,7 +63,6 @@ body {
 }
 
 h3 {
-text-decoration: underline;
 border: 3px double #000000;
 background: #c6e2ff;
 max-width: 200px;
@@ -74,7 +73,6 @@ font-size: 25px;
 }
 
 h2{
-    text-decoration: underline;
     border: 3px double #000000;
     background: #c6e2ff;
     max-width: 300px;

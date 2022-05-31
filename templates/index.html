@@ -40,28 +40,6 @@
       });
     });
 
-    $(document).ready(function(){
-        
-         $("#cap_btn").click(function(){
-
-           $.post("/capture",
-           {
-             name: "client",
-             time: "now"
-           },  );
-         });
-       });
-    $(document).ready(function(){
-         $("#open").click(function(){
-          $('#trashDetection').html("Lid Open: Yes")
-           $.post("/open_junk_transporter",
-           {
-             name: "client",
-             time: "now"
-           },  );
-         
-          });
-       });
 </script>
 
 
@@ -83,7 +61,7 @@
             <p class="button-txt"><span><button id="open_btn" type="button" >Open</button>
                 <button id='close_btn' type="button" >Close</button></span></p>
                 <span class="brsmall"></span>
-                <p><span><button id="cap_btn" type="button" >Capture</button></p>
+                <!-- <p><span><button id="cap_btn" type="button" >Capture</button></p> -->
                 </div>
 
         <br>

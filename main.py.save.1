@@ -2,11 +2,11 @@ from xml.etree.ElementTree import Comment
 from flask import Flask, render_template, request, url_for, redirect
 import cv2 as cv2
 import mediapipe as mp
+# import results
 import RPi.GPIO as GPIO #ONLY WORKS IN RPI
 import datetime
 from time import sleep
 from crontab import CronTab #FOR CRON ONLY WORKS IN RPI
-import threading
 
 mp_drawing = mp.solutions.drawing_utils
 mp_hands = mp.solutions.hands
@@ -19,12 +19,14 @@ isTime = True
 tipIds = [4, 8, 12, 16, 20]     # tip of all fingers from thumb to pinky
 state = None
 Gesture = None
-wCam, hCam = 640, 480          # dimensions of camera
+wCam, hCam = 720, 640           # dimensions of camera
+cap = cv2.VideoCapture(0)
+
 
 #to define finger position as well as setting up for hand gestures
-def fingerPosition(image, cap, handNo=0) -> list:
+def fingerPosition(image, handNo=0) -> list:
     lmList = []
-    with handsModule.Hands(static_image_mode=False, min_detection_confidence=0.7, min_tracking_confidence=0.7, max_num_hands=1) as hands:
+    with handsModule.Hands(static_image_mode=False, min_detection_confidence=0.7, min_tracking_confidence=0.7, max_num_hands=2) as hands:
         ret, frame = cap.read()
         results = hands.process(cv2.cvtColor(frame, cv2.COLOR_BGR2RGB))
         if results.multi_hand_landmarks:
@@ -37,12 +39,9 @@ def fingerPosition(image, cap, handNo=0) -> list:
     return lmList
 
 #to configure Crontab in Pi OS
-def cronConfig(x,y,z):
+def cronConfig(x,y):
     cron = CronTab(user='pi')
-    if (z=='open'):
-    	job = cron.new(command='python /home/pi/local/Xclass-Project/open.py', comment='turn on motor.py')
-    else:
-    	job = cron.new(command='python /home/pi/local/Xclass-Project/close.py', comment='turn on motor.py')
+    job = cron.new(command='python /home/pi/local/Xclass-Project/close.py', comment='turn on motor.py')
     job.setall(y, x, None, None, None)
     print(job)
     cron.write_to_user(user=True)
@@ -136,19 +135,19 @@ def index():
 def openTimer():
     data = request.form['appt']
     data_split = data.split(':')
-    return redirect(url_for('timerCheck', x=data_split[0], y=data_split[1], z='open')) #redirects to route /timerCheck/x/y
+    return redirect(url_for('timerCheck', x=data_split[0], y=data_split[1])) #redirects to route /timerCheck/x/y
 
 #route to set Close timer
 @app.route('/closeTimer', methods=['GET', 'POST'])
 def closeTimer():
     data = request.form['appt2']
     data_split = data.split(':')
-    return redirect(url_for('timerCheck', x=data_split[0], y=data_split[1], z='close')) #redirects to route /timerCheck/x/y
+    return redirect(url_for('timerCheck', x=data_split[0], y=data_split[1])) #redirects to route /timerCheck/x/y
 
 #route to set timer to Raspberry Pi
-@app.route('/timerCheck/<x>/<y>/<z>')
-def timerCheck(x,y,z):
-    cronConfig(x,y,z)
+@app.route('/timerCheck/<x>/<y>')
+def timerCheck(x,y):
+    cronConfig(x,y)
     return("success")
 
 #route for open button   
@@ -165,8 +164,9 @@ def close_manual():
     chiCurtain.closeCurtain()
     return ("hi")
 
-def capture_gesture():
-    cap = cv2.VideoCapture(0)
+#route for video capturing and hand gestures
+@app.route('/capture', methods=['GET', 'POST'])
+def capture():     
     print("Capture says hi")
     state = ""
     cap.set(3, wCam)
@@ -174,12 +174,12 @@ def capture_gesture():
     with mp_hands.Hands(
         min_detection_confidence=0.8,
         min_tracking_confidence=0.5) as hands:
-        while cap.isOpened():           # all occurs when the capture button is pressed for now    # taking many static picture with camera each time 
-            
-            ret,frame = cap.read() 
-                                                   # iterated through with while l
+        while cap.isOpened():           # all occurs when the capture button is pressed for now
+            ret, frame = cap.read()     # taking many static picture with camera each time 
+                                        # iterated through with while loop
+
+            results = hands.process(cv2.cvtColor(frame, cv2.COLOR_BGR2RGB))     # converting BGR to RBG
             success, image = cap.read()
-            cv2.waitKey(1)
             if not success:
                 print("Ignoring empty camera frame.")
             # If loading a video, use 'break' instead of 'continue'.
@@ -201,7 +201,7 @@ def capture_gesture():
                     drawingModule.draw_landmarks(frame, hand_landmarks, handsModule.HAND_CONNECTIONS)
             cv2.imshow('Test hand', frame)
 
-            lmList = fingerPosition(image, cap)
+            lmList = fingerPosition(image)
             if len(lmList) != 0:
                 fingers = []                        # num of fingers up
 
@@ -228,9 +228,8 @@ def capture_gesture():
                     state = "Pause"
                     print("CLOSING CURTAIN")
                     chiCurtain.closeCurtain() 
-
+                           
+    return ("hi")
 
 if __name__ == "__main__":
-    capture_thread = threading.Thread(target=capture_gesture)
-    capture_thread.start()
     app.run(host='0.0.0.0', port=5000, debug=True)
