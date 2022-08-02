@@ -1,4 +1,4 @@
-# Xclass-Project
+# Xclass-Project (remotely controlled automated curtains)
 
 # TABLE OF CONTENTS
 
