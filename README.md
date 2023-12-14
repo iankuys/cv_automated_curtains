@@ -36,11 +36,7 @@ main.py used to host web application from Raspberry Pi
 Our program uses a number of different imports. In order for this code to compile, make sure to install all required modules prior to running. Copy and paste each line into the terminal.
 
 
-```pip install flask```
-```pip install opencv-python```
-```pip install mediapipe```
-```pip install RPi.GPIO```
-```pip install python-crontab``` 
+```pip install .```
 
 IF ```pip``` doesn't work try using ```pip3``` instead
 

@@ -1,0 +1,9 @@
+Metadata-Version: 2.1
+Name: XClass-Project
+Version: 1.0.0
+Home-page: https://github.com/iankuys/Xclass-Project
+Requires-Dist: flask
+Requires-Dist: opencv-python
+Requires-Dist: mediapipe
+Requires-Dist: RPi.GPIO
+Requires-Dist: python-crontab

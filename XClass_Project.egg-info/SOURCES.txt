@@ -1,0 +1,7 @@
+README.md
+setup.py
+XClass_Project.egg-info/PKG-INFO
+XClass_Project.egg-info/SOURCES.txt
+XClass_Project.egg-info/dependency_links.txt
+XClass_Project.egg-info/requires.txt
+XClass_Project.egg-info/top_level.txt
