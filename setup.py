@@ -4,7 +4,7 @@ setup(
     name='XClass-Project',
     version='1.0.0',
     url='https://github.com/iankuys/Xclass-Project',
-    packages=find_packages(),    
+    packages=find_packages(),
     install_requires=[
         'flask',
         'opencv-python',
