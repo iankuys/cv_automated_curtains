@@ -56,7 +56,7 @@ if __name__ == "__main__":
     rswitch_pressed = not(GPIO.input(rswitch))
     while True:
         state = input('Enter "o" for open and "c" for close: ')
-        if !lswitch_pressed and !rswitch_pressed:
+        if not lswitch_pressed and not rswitch_pressed:
             move_motor(state)
         elif (state == "c") and (rswitch_pressed):
             move_motor(state)

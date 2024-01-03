@@ -54,7 +54,7 @@ def cronConfig(x, y, z):
     cron.write_to_user(user=True)
 
 
-class ChiCurtain:
+class automated_curtain:
 
     def __init__(self):  # initialization of Pi IO ports
         isMoving = False
@@ -133,7 +133,7 @@ class ChiCurtain:
 
 
 # uncomment if doesn't work and delete first line in main fucntion
-chiCurtain = ChiCurtain()
+curtain = automated_curtain()
 
 # route for homepage
 
@@ -176,7 +176,7 @@ def timerCheck(x, y, z):
 @app.route('/open', methods=['GET', 'POST'])
 def home():
     print("hello from open")
-    chiCurtain.openCurtain()
+    curtain.openCurtain()
     return ("hi")
 
 # route for close button
@@ -185,7 +185,7 @@ def home():
 @app.route('/close', methods=['GET', 'POST'])
 def close_manual():
     print("hello from close")
-    chiCurtain.closeCurtain()
+    curtain.closeCurtain()
     return ("hi")
 
 
@@ -250,11 +250,11 @@ def capture_gesture():
                 if totalFingers == 5:
                     state = "Play"
                     print("OPENING CURTAIN")
-                    chiCurtain.openCurtain()
+                    curtain.openCurtain()
                 if totalFingers == 0 and state == "Play":
                     state = "Pause"
                     print("CLOSING CURTAIN")
-                    chiCurtain.closeCurtain()
+                    curtain.closeCurtain()
 
 
 if __name__ == "__main__":
