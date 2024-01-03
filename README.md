@@ -1,4 +1,4 @@
-# Xclass-Project (remotely controlled automated curtains)
+# cv_automated_curtains (remotely controlled automated curtains)
 
 # TABLE OF CONTENTS
 
