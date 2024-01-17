@@ -50,7 +50,6 @@ def cronConfig(x, y, z):
         job = cron.new(
             command='python /home/pi/local/Xclass-Project/close.py', comment='turn on motor.py')
     job.setall(y, x, None, None, None)
-    print(job)
     cron.write_to_user(user=True)
 
 
