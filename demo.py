@@ -96,7 +96,7 @@ def capture_gesture():
                 if totalFingers == 5:
                     state = "Play"
                     print("OPENING CURTAIN")
-                if totalFingers == 0 and state == "Play":
+                if totalFingers == 0:
                     state = "Pause"
                     print("Stopping Application")
                     break
